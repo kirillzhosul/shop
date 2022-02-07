@@ -14,8 +14,12 @@ def catalog_index():
     args_limit = request.args.get("l", type=int, default=9)
     args_offset = request.args.get("o", type=int, default=0)
     args_query = request.args.get("q", type=str, default="")
+    args_category_id = request.args.get("cid", type=int, default=0)
 
     db_filter = Item.query.filter(Item.title.ilike(f"%{args_query}%"))
+    if args_category_id != 0:
+        db_filter = db_filter.filter_by(category_id=args_category_id)
+
     db_items = db_filter.limit(args_limit).offset(args_offset).all()
     db_count = db_filter.count()
 
