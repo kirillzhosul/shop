@@ -1,6 +1,6 @@
 #!usr/bin/python
 """
-    Merchandise shop shop views.
+    Merchandise shop profile views.
 """
 
 from typing import NoReturn
@@ -13,7 +13,5 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import catalog
-    from . import item
-    app.register_blueprint(catalog.bp_catalog)
-    app.register_blueprint(item.bp_item)
+    from . import profile
+    app.register_blueprint(profile.bp_profile)
