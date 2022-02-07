@@ -13,4 +13,5 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    pass
+    from . import cart
+    cart.register(app)
