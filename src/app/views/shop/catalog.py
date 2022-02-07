@@ -11,8 +11,8 @@ bp_catalog = Blueprint("catalog", __name__)
 
 @bp_catalog.route("/catalog", methods=["GET"])
 def catalog_index():
-    args_limit = request.args.get("l")
-    args_offset = request.args.get("o")
+    args_limit = request.args.get("l", type=int, default=9)
+    args_offset = request.args.get("o", type=int, default=0)
     args_query = request.args.get("q", type=str, default="")
 
     db_filter = Item.query.filter(Item.title.ilike(f"%{args_query}%"))
@@ -23,6 +23,7 @@ def catalog_index():
                            items=db_items,
                            count=db_count,
                            query=args_query)
+
 
 @bp_catalog.route("/fill", methods=["GET"])
 def catalog_fill():

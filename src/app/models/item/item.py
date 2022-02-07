@@ -7,6 +7,7 @@
 import datetime
 from ... import db
 from ..review.review import ReviewMark
+from ..category import Category
 
 
 class Item(db.Model):
@@ -43,20 +44,31 @@ class Item(db.Model):
 
     def get_price_with_discount(self):
         """
-        Returnrs price with all applied discounts.
-        :return: Price with applied discounts.
+        Returns price with all applied discounts and overall percent.
+        :return: Price with applied discounts and percent.
         """
         percent = 0
         for discount in self.discounts:
             percent += discount.percent
 
-        return self.price * (percent / 100)
+        if percent <= 0:
+            return float(self.price), percent
+
+        return float(self.price) * (percent / 100), percent
 
     def get_scores(self):
         """
-        Returns amount of bade and good reviews.
-        :return: Tuple with amount of bad and good reviews.
+        Returns amount of bad, good and all reviews.
+        :return: Tuple with amount of bad, good and total reviews.
         """
+        all_reviews = len([review for review in self.reviews])
         bad_reviews = len([review for review in self.reviews if review.mark == ReviewMark.BAD])
         good_reviews = len([review for review in self.reviews if review.mark == ReviewMark.GOOD])
-        return bad_reviews, good_reviews
+
+        return bad_reviews, good_reviews, all_reviews
+
+    def get_category_title(self):
+        return Category.query.filter_by(id=self.category_id).first().title
+
+    def get_icon(self):
+        pass
