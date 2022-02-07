@@ -4,6 +4,7 @@
 """
 
 from flask import Blueprint, render_template, request
+from flask_login import current_user
 from ...models.item.item import Item
 from ...models.category import Category
 from ... import db
@@ -30,7 +31,8 @@ def catalog_index():
                            items=db_items,
                            count=db_count,
                            query=args_query,
-                           category=category)
+                           category=category,
+                           user=current_user)
 
 
 @bp_catalog.route("/categories", methods=["GET"])
@@ -44,7 +46,8 @@ def catalog_categories():
 
     return render_template("catalog/categories.jinja",
                            categories=db_items,
-                           count=db_count)
+                           count=db_count,
+                           user=current_user)
 
 
 @bp_catalog.route("/fill", methods=["GET"])

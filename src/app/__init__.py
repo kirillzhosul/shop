@@ -7,6 +7,7 @@
 from os.path import exists as path_exists
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 __author__ = "Kirill Zhosul"
 __copyright = "(c) 2022 Kirill Zhosul"
@@ -14,6 +15,17 @@ __license__ = "MIT"
 
 # Global objects.
 db = SQLAlchemy()
+lm = LoginManager()
+
+
+def login_manager_init_app(app: Flask):
+    """
+    Initialises login manager.
+    :param app: Flask application.
+    """
+    from .models.user.user import User  # pylint: disable=import-outside-toplevel, unused-import
+    lm.init_app(app)
+    lm.user_loader(lambda uid: User.query.get(int(uid)))
 
 
 def create(name=None) -> Flask:
@@ -37,5 +49,8 @@ def create(name=None) -> Flask:
     # Views.
     from . import views
     views.register(app)
+
+    # Login manager.
+    login_manager_init_app(app)
 
     return app
