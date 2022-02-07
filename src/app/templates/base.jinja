@@ -25,27 +25,35 @@
                         </li>
                         &nbsp; &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-outline-secondary" href="/profile">Профиль</a>
+                            <a class="btn btn-outline-primary" href="/profile">Профиль</a>
                         </li>
                         &nbsp; &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-success" href="/orders">Заказы <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/orders">Заказы <span class="badge badge-light">0</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-success" href="/cart">Корзина <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light">0</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-success" href="/favorites">Избранное <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/favorites">Избранное <span class="badge badge-light">0</span></a>
                         </li>
                     {% else %}
-                     <li class="nav-item active">
-                            <a class="btn btn-outline-secondary" href="/about">О нас</a>
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-primary" href="/catalog">Каталог</a>
+                        </li>
+                        &nbsp; &nbsp;
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-primary" href="/auth">Авторизоваться</a>
+                        </li>
+                        &nbsp; &nbsp;
+                        <li class="nav-item active">
+                            <a class="btn btn-outline-primary" href="/about">О нас</a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-outline-secondary" href="/contacts">Контакты</a>
+                            <a class="btn btn-outline-primary" href="/contacts">Контакты</a>
                         </li>
                     {% endif %}
 
@@ -59,25 +67,12 @@
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <button class="btn btn-outline-success" type="submit">Найти</button>
+                            <button class="btn btn-outline-primary" type="submit">Найти</button>
                         </li>
                     </ul>
                 </form>
             </div>
         </nav>
-
-        <!--
-        <div class="position-relative" style="background-color: #f8f9fa;">
-            <div class="container py-6 text-center">
-                <div class="row position-relative">
-                    <div class="col-lg-10 mx-auto">
-                        <h6 class="text-uppercase text-primary mb-5">Добро пожаловать к нам</h6>
-                        <h4 class="display-4 mb-5">Магазин мерча<br>для <b>своих</b></h4>
-                    </div>
-                </div>
-
-            </div>
-        </div> -->
 
         <!-- Body. -->
         {% block body %}{% endblock %}
