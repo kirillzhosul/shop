@@ -10,11 +10,15 @@ bp_catalog = Blueprint("catalog", __name__)
 
 @bp_catalog.route("/catalog", methods=["GET"])
 def catalog_index():
-    limit = request.args.get("l")
-    offset = request.args.get("o")
-    query = request.args.get("q", type=str, default="")
+    args_limit = request.args.get("l")
+    args_offset = request.args.get("o")
+    args_query = request.args.get("q", type=str, default="")
 
-    query = "%{}%".format(query)
-    items = Item.query.filter(Item.title.ilike(query)).limit(limit).offset(offset).all()
+    db_filter = Item.query.filter(Item.title.ilike(f"%{args_query}%"))
+    db_items = db_filter.limit(args_limit).offset(args_offset).all()
+    db_count = db_filter.count()
 
-    return render_template("catalog/index.jinja", items=items)
+    return render_template("catalog/index.jinja",
+                           items=db_items,
+                           count=db_count,
+                           query=args_query)
