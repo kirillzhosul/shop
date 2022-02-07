@@ -5,6 +5,7 @@
 
 from flask import Blueprint, render_template, request
 from ...models.item.item import Item
+from ... import db
 bp_catalog = Blueprint("catalog", __name__)
 
 
@@ -22,3 +23,15 @@ def catalog_index():
                            items=db_items,
                            count=db_count,
                            query=args_query)
+
+@bp_catalog.route("/fill", methods=["GET"])
+def catalog_fill():
+    from random import randrange
+    for _ in range(30):
+        title = "".join([chr(randrange(1072, 1103, 1)) for _ in range(30)])
+        description = "".join([chr(randrange(1072, 1103, 1)) for _ in range(100)])
+
+        item = Item(title, description, "{}", randrange(1, 9999, 1), randrange(1, 9999, 1), randrange(1, 4))
+        db.session.add(item)
+        db.session.commit()
+    return "OK!"
