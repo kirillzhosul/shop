@@ -5,7 +5,9 @@
 
 from flask import Blueprint, render_template, request
 from ...models.item.item import Item
+from ...models.category import Category
 from ... import db
+
 bp_catalog = Blueprint("catalog", __name__)
 
 
@@ -23,10 +25,26 @@ def catalog_index():
     db_items = db_filter.limit(args_limit).offset(args_offset).all()
     db_count = db_filter.count()
 
+    category = None if args_category_id == 0 else Category.query.filter_by(id=args_category_id).first()
     return render_template("catalog/index.jinja",
                            items=db_items,
                            count=db_count,
-                           query=args_query)
+                           query=args_query,
+                           category=category)
+
+
+@bp_catalog.route("/categories", methods=["GET"])
+def catalog_categories():
+    args_limit = request.args.get("l", type=int, default=99)
+    args_offset = request.args.get("o", type=int, default=0)
+
+    db_filter = Category.query.limit(args_limit).offset(args_offset)
+    db_items = db_filter.all()
+    db_count = db_filter.count()
+
+    return render_template("catalog/categories.jinja",
+                           categories=db_items,
+                           count=db_count)
 
 
 @bp_catalog.route("/fill", methods=["GET"])
