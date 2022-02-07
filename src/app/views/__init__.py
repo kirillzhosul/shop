@@ -17,4 +17,11 @@ def register(app: Flask) -> NoReturn:
     app.register_blueprint(root.bp_root)
 
     from . import shop
+    from . import auth
+    from . import profile
+    from . import api
+
     shop.register(app)
+    auth.register(app)
+    profile.register(app)
+    api.register(app)

@@ -50,8 +50,8 @@ def catalog_categories():
                            user=current_user)
 
 
-@bp_catalog.route("/debug/fill", methods=["GET"])
-def debug_fill():
+@bp_catalog.route("/catalog/debug", methods=["GET"])
+def catalog_debug():
     from random import randrange
     for _ in range(30):
         # title = "".join([chr(randrange(1072, 1103, 1)) for _ in range(30)])
