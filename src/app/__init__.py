@@ -25,7 +25,12 @@ def login_manager_init_app(app: Flask):
     """
     from .models.user.user import User  # pylint: disable=import-outside-toplevel, unused-import
     lm.init_app(app)
-    lm.user_loader(lambda uid: User.query.get(int(uid)))
+
+    @lm.user_loader
+    def user_loader(uid):
+        if uid is None or uid == 'None':
+            uid = -1
+        return User.query.get(int(uid))
 
 
 def create(name=None) -> Flask:

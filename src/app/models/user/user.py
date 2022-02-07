@@ -7,9 +7,10 @@
 import datetime
 from typing import Optional
 from ... import db
+from flask_login import UserMixin
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """
         Represents shop user-customer.
     """
@@ -28,11 +29,9 @@ class User(db.Model):
 
     date_created = db.Column(db.DateTime(timezone=False), nullable=False)
 
-    def __init__(self, email: str, name: str, cart_id: int, phone: Optional[str] = None):
+    def __init__(self, email: str, name: str, phone: Optional[str] = None):
         self.name = name
         self.email = email
         self.phone = phone
-
-        self.cart_id = cart_id
 
         self.date_created = datetime.datetime.now()
