@@ -60,6 +60,7 @@
                 </ul>
 
                 <!-- Search. -->
+                {% block search %}
                 <form class="form-inline" method="GET" action="/catalog">
                     <ul class="nav navbar-nav">
                         <li class="nav-item active">
@@ -71,6 +72,7 @@
                         </li>
                     </ul>
                 </form>
+                {% endblock%}
             </div>
         </nav>
 

@@ -1,0 +1,31 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Главная{% endblock %}
+{% block search %}{% endblock%}
+
+{% block body %}
+<div class="container text-center py-5 ">
+    <div class="row position-relative">
+        <div class="col-lg mx-auto">
+            <h1 class="display-4 mb-5">Каталог товаров</h1>
+        </div>
+
+    </div>
+    <div class="row position-relative">
+        <div class="col-lg-4 mx-auto">
+            <form method="GET" action="/catalog">
+                <input class="form-control" type="search" name="q" placeholder="Запрос" aria-label="Запрос">
+                <button class="btn btn-outline-primary mt-1" type="submit">Найти</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg mx-auto mt-5">
+            {% for item in items %}
+                {{ item.title }}<br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
