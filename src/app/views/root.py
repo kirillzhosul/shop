@@ -1,6 +1,6 @@
 #!usr/bin/python
 """
-    Merchandise shopapplication root views.
+    Merchandise shop application root views.
 """
 
 from flask import Blueprint
