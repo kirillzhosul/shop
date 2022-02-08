@@ -11,49 +11,95 @@ from .... import db
 
 bp_api_cart = Blueprint("api_cart", __name__)
 
-# TODO: Cart item quantity.
-
 
 @bp_api_cart.route("/api/cart/add", methods=["GET"])
 def api_cart_add():
     if not current_user.is_authenticated:
         return jsonify({
-            "error": "Not authenticated!"
+            "error": "Требуется авторизация!"
         }), 401
 
     item_id = request.args.get("item_id", type=int, default=0)
-    if item_id == 0 or not Item.query.filter_by(id=item_id).first():
+    item = Item.query.filter_by(id=item_id).first()
+    if item_id == 0 or not item:
         return jsonify({
-            "error": "Item with given item_id does not exist!"
+            "error": "Товар с индексом item_id не найден в каталоге!"
         }), 404
     cart_item = CartItem(item_id, current_user.id)
+
+    item_quantity = request.args.get("quantity", type=int, default=1)
+    if item_quantity != 1:
+        if item_quantity < 0:
+            return jsonify({
+                "error": "item_quantity должен быть больше 0!"
+            }), 400
+        if item_quantity > item.quantity:
+            return jsonify({
+                "error": "item_quantity не должен превышать кол-во товара на складе!",
+                "requested_quantity": item_quantity,
+                "avaliable_quantity": item.quantity
+            }), 400
+        cart_item.quantity = item_quantity
 
     db.session.add(cart_item)
     db.session.commit()
 
-    return jsonify({}), 200
+    return jsonify({
+        "cart_item_id": cart_item.id
+    }), 200
 
 
 @bp_api_cart.route("/api/cart/get", methods=["GET"])
 def api_cart_get():
     if not current_user.is_authenticated:
         return jsonify({
-            "error": "Not authenticated!"
+            "error": "Требуется авторизация!"
         }), 401
 
     db_cart_items = CartItem.query.filter_by(owner_id=current_user.id).all()
+
+    cart_count = sum([cart_item.quantity for cart_item in db_cart_items])
     cart_price = sum([
         Item.query.filter_by(id=cart_item.item_id).first().price
         for cart_item in db_cart_items
     ])
+
     cart_items = [
         {
-            "item_id": cart_item.item_id
+            "cart_item_id": cart_item.id,
+            "item_id": cart_item.item_id,
+            "quantity": cart_item.quantity
         } for cart_item in db_cart_items
     ]
 
     return jsonify({
         "cart_items": cart_items,
         "total_price": cart_price,
-        "total_count": len(cart_items)
+        "total_count": cart_count
     }), 200
+
+
+@bp_api_cart.route("/api/cart/remove", methods=["GET"])
+def api_cart_remove():
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Требуется авторизация!"
+        }), 401
+    cart_item_id = request.args.get("cart_item_id", type=int, default=0)
+    cart_item = CartItem.query.filter_by(id=cart_item_id).first()
+    if not cart_item:
+        return jsonify({
+            "error": "Товар с индексом cart_item_id не найден в корзине"
+        }), 404
+    if cart_item.owner_id != current_user.id:
+        return jsonify({
+            "error": "Товар который вы пытаетесь удалить, находиться не в вашей корзине!"
+        }), 403
+
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    return jsonify({
+    }), 200
+
+# TODO Quantity cart API.

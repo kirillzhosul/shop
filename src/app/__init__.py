@@ -58,4 +58,7 @@ def create(name=None) -> Flask:
     # Login manager.
     login_manager_init_app(app)
 
+    # String slashes.
+    app.url_map.strict_slashes = False
+
     return app

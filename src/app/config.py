@@ -14,6 +14,8 @@ class Config(object):
     FLASK_SECRET_KEY = SECRET_KEY
     DEBUG = False
 
+    JSON_AS_ASCII = False
+
     SQLALCHEMY_DATABASE_FILENAME = "database\\database.db"
     SQLALCHEMY_DATABASE_FILEPATH = os.path.join(os.path.abspath(os.path.dirname(__file__)),
                                                 SQLALCHEMY_DATABASE_FILENAME)

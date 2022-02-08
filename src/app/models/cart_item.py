@@ -6,8 +6,6 @@
 
 from .. import db
 
-# TODO: Cart item quantity.
-
 
 class CartItem(db.Model):
     """
@@ -16,6 +14,8 @@ class CartItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     item_id = db.Column(db.Integer, db.ForeignKey("item.id"), nullable=False)
+
+    quantity = db.Column(db.Integer, nullable=False, default=1)
 
     owner_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
