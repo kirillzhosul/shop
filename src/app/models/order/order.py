@@ -39,6 +39,9 @@ class Order(db.Model):
     def set_status(self, status: OrderStatus):
         self.status = status.value
 
+    def get_status(self):
+        return OrderStatus(self.status)
+
     def get_price(self):
         """
         Returns price of the all items in the order.

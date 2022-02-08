@@ -38,4 +38,5 @@ def profile_favorites():
 
 @bp_profile.route("/orders", methods=["GET"])
 def profile_orders():
-    return "TBD"
+    return render_template("profile/orders.jinja",
+                           user=current_user)
