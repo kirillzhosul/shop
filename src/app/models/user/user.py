@@ -20,6 +20,9 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(15), nullable=True)
 
+    balance_real = db.Column(db.Integer, default=0, nullable=False)
+    balance_bonus = db.Column(db.Integer, default=0, nullable=False)
+
     favorite_items = db.relationship("FavoriteItem", backref="owner")  # ON DELETE CASCADE
     cart_items = db.relationship("CartItem", backref="owner")  # ON DELETE CASCADE
     reviews = db.relationship("Review", backref="author")  # ON DELETE CASCADE
@@ -38,6 +41,10 @@ class User(db.Model, UserMixin):
 
     def get_counters(self):
         counter_orders = len(self.orders)
-        counter_cart = len(self.cart_items)
+        counter_cart = (
+            len(self.cart_items),
+            sum([cart_item.item.get_price_with_discount()[0] for cart_item in self.cart_items])
+        )
         counter_favorites = len(self.favorite_items)
+
         return counter_orders, counter_cart, counter_favorites

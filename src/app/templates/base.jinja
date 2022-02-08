@@ -37,7 +37,11 @@
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light" id="counter-cart">{{ counters[1] }}</span></a>
+                            <a class="btn btn-primary" href="/cart">Корзина
+                                <span class="badge badge-light" id="counter-cart">{{ counters[1][0] }}</span>
+                                <span class="badge badge-light" id="counter-cart-price">{{ counters[1][1] }}₽</span>
+                            </a>
+
                         </li>
                         &nbsp;
                         <li class="nav-item active">
