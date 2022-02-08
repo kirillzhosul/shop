@@ -21,7 +21,6 @@
 
                 <!-- Buttons. -->
                 <ul class="nav navbar-nav">
-
                     {% if user.is_authenticated %}
                         {% set counters = user.get_counters() %}
                         <li class="nav-item active">
@@ -44,7 +43,6 @@
                                 <span class="badge badge-light" id="counter-cart">{{ counters[1][0] }}</span>
                                 <span class="badge badge-light" id="counter-cart-price">{{ counters[1][1] }}₽</span>
                             </a>
-
                         </li>
                         &nbsp;
                         <li class="nav-item active">

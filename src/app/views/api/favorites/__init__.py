@@ -1,13 +1,10 @@
 #!usr/bin/python
 """
-    Merchandise shop API views.
+    Merchandise shop favorites API views.
 """
 
 from typing import NoReturn
 from flask import Flask
-
-# TODO: Catalog API.
-# TODO: Categories API.
 
 
 def register(app: Flask) -> NoReturn:
@@ -16,7 +13,5 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import cart
-    from . import favorites
-    cart.register(app)
-    favorites.register(app)
+    from .favorites_api import bp_api_favorites
+    app.register_blueprint(bp_api_favorites)

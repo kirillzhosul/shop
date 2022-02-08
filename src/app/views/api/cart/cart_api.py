@@ -5,6 +5,7 @@
 
 from flask import Blueprint, request, jsonify
 from flask_login import current_user
+from ....decorators import login_required
 from ....models.cart_item import CartItem
 from ....models.item import Item
 from .... import db
@@ -12,13 +13,9 @@ from .... import db
 bp_api_cart = Blueprint("api_cart", __name__)
 
 
+@login_required(always_json=True)
 @bp_api_cart.route("/api/cart/add", methods=["GET"])
 def api_cart_add():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Требуется авторизация!"
-        }), 401
-
     item_id = request.args.get("item_id", type=int, default=0)
     item = Item.query.filter_by(id=item_id).first()
     if item_id == 0 or not item:
@@ -49,13 +46,9 @@ def api_cart_add():
     }), 200
 
 
+@login_required(always_json=True)
 @bp_api_cart.route("/api/cart/get", methods=["GET"])
 def api_cart_get():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Требуется авторизация!"
-        }), 401
-
     cart_count = sum([cart_item.quantity for cart_item in current_user.cart_items])
     cart_price = sum([
         Item.query.filter_by(id=cart_item.item_id).first().get_price_with_discount()[0]
@@ -77,12 +70,9 @@ def api_cart_get():
     }), 200
 
 
+@login_required(always_json=True)
 @bp_api_cart.route("/api/cart/remove", methods=["GET"])
 def api_cart_remove():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Требуется авторизация!"
-        }), 401
     cart_item_id = request.args.get("cart_item_id", type=int, default=0)
     cart_item = CartItem.query.filter_by(id=cart_item_id).first()
     if not cart_item:
