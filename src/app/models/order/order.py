@@ -6,6 +6,7 @@
 
 import datetime
 from .order_delivery_type import OrderDeliveryType
+from .order_status import OrderStatus
 from ... import db
 
 
@@ -15,6 +16,8 @@ class Order(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
 
+    status = db.Column(db.Integer, nullable=False)  # default -> see constructor.
+
     delivery_type = db.Column(db.Integer, nullable=False)
     delivery_address = db.Column(db.Text, nullable=False)
 
@@ -23,13 +26,18 @@ class Order(db.Model):
 
     date_created = db.Column(db.DateTime(timezone=False), nullable=False)
 
-    def __init__(self, customer_id: int, delivery_type: OrderDeliveryType, delivery_address):
+    def __init__(self, customer_id: int, delivery_type: OrderDeliveryType, delivery_address: str):
+        self.status = OrderStatus.AWAITING_PAYMENT.value
+
         self.customer_id = customer_id
 
-        self.delivery_type = delivery_type
+        self.delivery_type = delivery_type.value
         self.delivery_address = delivery_address
 
         self.date_created = datetime.datetime.now()
+
+    def set_status(self, status: OrderStatus):
+        self.status = status.value
 
     def get_price(self):
         """

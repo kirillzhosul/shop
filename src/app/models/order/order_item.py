@@ -24,5 +24,5 @@ class OrderItem(db.Model):
         self.order_id = order_id
         self.item_id = item.id
 
-        self.price = item.get_price_with_discount() * quantity
+        self.price, _ = item.get_price_with_discount() * quantity
         self.quantity = quantity

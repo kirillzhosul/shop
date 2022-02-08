@@ -5,18 +5,23 @@
 
 from flask import Blueprint, request, jsonify
 from flask_login import current_user
-from ....decorators import login_required
+
 from ....models.favorite_item import FavoriteItem
 from ....models.item import Item
+
 from .... import db
 
 
 bp_api_favorites = Blueprint("api_favorites", __name__)
 
 
-@login_required(always_json=True)
 @bp_api_favorites.route("/api/favorites/add", methods=["GET"])
 def api_favorites_add():
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Авторизуйтесь для выполнения запроса!",
+            "authentication_required": True
+        }), 401
     item_id = request.args.get("item_id", type=int, default=0)
     item = Item.query.filter_by(id=item_id).first()
     if item_id == 0 or not item:
@@ -33,9 +38,13 @@ def api_favorites_add():
     }), 200
 
 
-@login_required(always_json=True)
 @bp_api_favorites.route("/api/favorites/get", methods=["GET"])
 def api_favorites_get():
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Авторизуйтесь для выполнения запроса!",
+            "authentication_required": True
+        }), 401
     favorite_items = [
         {
             "favorite_item_id": favorite_item.id,
@@ -50,9 +59,13 @@ def api_favorites_get():
     }), 200
 
 
-@login_required(always_json=True)
 @bp_api_favorites.route("/api/favorites/remove", methods=["GET"])
 def api_favorites_remove():
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Авторизуйтесь для выполнения запроса!",
+            "authentication_required": True
+        }), 401
     favorite_item_id = request.args.get("favorite_item_id", type=int, default=0)
     favorite_item = FavoriteItem.query.filter_by(id=favorite_item_id).first()
     if not favorite_item:

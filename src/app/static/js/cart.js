@@ -23,3 +23,15 @@ function removeFromCart(cart_item_id){
         return;
     });
 }
+
+function orderCart(){
+    $.get("/api/cart/order", function(data, status){
+        if ("error" in data){
+            return; // TODO ERROR.
+        }
+
+        // TODO AJAX(?????).
+        window.location.reload();
+        return;
+    });
+}
