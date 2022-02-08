@@ -11,6 +11,8 @@ from .... import db
 
 bp_api_cart = Blueprint("api_cart", __name__)
 
+# TODO: Cart item quantity.
+
 
 @bp_api_cart.route("/api/cart/add", methods=["GET"])
 def api_cart_add():

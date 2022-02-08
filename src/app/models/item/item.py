@@ -20,7 +20,7 @@ class Item(db.Model):
     description = db.Column(db.String(255), nullable=False)
     metainformation = db.Column(db.Text, nullable=False)  # JSON.
 
-    price = db.Column(db.Numeric, nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
     date_created = db.Column(db.DateTime(timezone=False), nullable=False)
@@ -52,9 +52,10 @@ class Item(db.Model):
             percent += discount.percent
 
         if percent <= 0:
-            return float(self.price), percent
+            return self.price, percent
 
-        return float(self.price) * (percent / 100), percent
+        price_with_discount = int(self.price * (percent / 100))
+        return price_with_discount, percent
 
     def get_scores(self):
         """

@@ -6,6 +6,9 @@
 from typing import NoReturn
 from flask import Flask
 
+# TODO: Catalog API.
+# TODO: Categories API.
+
 
 def register(app: Flask) -> NoReturn:
     """

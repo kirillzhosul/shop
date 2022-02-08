@@ -6,6 +6,8 @@
 
 from .. import db
 
+# TODO: Cart item quantity.
+
 
 class CartItem(db.Model):
     """
