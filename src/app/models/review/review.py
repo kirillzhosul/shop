@@ -23,7 +23,7 @@ class Review(db.Model):
 
     date_created = db.Column(db.DateTime(timezone=False), nullable=False)
 
-    attachments = db.relationship("ReviewImage", backref="review")  # ON DELETE CASCADE
+    images = db.relationship("ReviewImage", backref="review")  # ON DELETE CASCADE
 
     def __init__(self, text: str, mark: ReviewMark, item_id: int, author_id: int):
         self.text = text

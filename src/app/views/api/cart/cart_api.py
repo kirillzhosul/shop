@@ -56,12 +56,10 @@ def api_cart_get():
             "error": "Требуется авторизация!"
         }), 401
 
-    db_cart_items = CartItem.query.filter_by(owner_id=current_user.id).all()
-
-    cart_count = sum([cart_item.quantity for cart_item in db_cart_items])
+    cart_count = sum([cart_item.quantity for cart_item in current_user.cart_items])
     cart_price = sum([
-        Item.query.filter_by(id=cart_item.item_id).first().price
-        for cart_item in db_cart_items
+        Item.query.filter_by(id=cart_item.item_id).first().get_price_with_discount()[0]
+        for cart_item in current_user.cart_items
     ])
 
     cart_items = [
@@ -69,7 +67,7 @@ def api_cart_get():
             "cart_item_id": cart_item.id,
             "item_id": cart_item.item_id,
             "quantity": cart_item.quantity
-        } for cart_item in db_cart_items
+        } for cart_item in current_user.cart_items
     ]
 
     return jsonify({

@@ -33,15 +33,15 @@
                         </li>
                         &nbsp; &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/orders">Заказы <span class="badge badge-light">{{ counters[0] }}</span></a>
+                            <a class="btn btn-primary" href="/orders">Заказы <span class="badge badge-light" id="counter-orders">{{ counters[0] }}</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light">{{ counters[1] }}</span></a>
+                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light" id="counter-cart">{{ counters[1] }}</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/favorites">Избранное <span class="badge badge-light">{{ counters[2] }}</span></a>
+                            <a class="btn btn-primary" href="/favorites">Избранное <span class="badge badge-light" id="counter-favorites">{{ counters[2] }}</span></a>
                         </li>
                     {% else %}
                         <li class="nav-item active">

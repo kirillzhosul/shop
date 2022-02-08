@@ -31,6 +31,8 @@ class Item(db.Model):
     images = db.relationship("ItemImage", backref="item")  # ON DELETE CASCADE
     reviews = db.relationship("Review", backref="item")  # ON DELETE CASCADE
 
+    cart_items = db.relationship("CartItem", backref="item")  # ON DELETE CASCADE
+
     def __init__(self, title: str, description: str, metainformation: str, price: float, quantity: int, category_id: int):
         self.title = title
         self.description = description
