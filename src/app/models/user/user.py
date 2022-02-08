@@ -35,3 +35,9 @@ class User(db.Model, UserMixin):
         self.phone = phone
 
         self.date_created = datetime.datetime.now()
+
+    def get_counters(self):
+        counter_orders = len(self.orders)
+        counter_cart = len(self.cart_items)
+        counter_favorites = len(self.favorite_items)
+        return counter_orders, counter_cart, counter_favorites

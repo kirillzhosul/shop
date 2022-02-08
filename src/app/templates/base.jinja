@@ -10,6 +10,8 @@
         <title>{% block title %}{% endblock %}</title>
         <!-- Style. -->
         <style>{% block style %}{% endblock %}</style>
+        <!-- Includes. -->
+        {% block include %}{% endblock %}
     </head>
     <body>
         <!-- Header. -->
@@ -21,6 +23,7 @@
                 <ul class="nav navbar-nav">
 
                     {% if user.is_authenticated %}
+                        {% set counters = user.get_counters() %}
                         <li class="nav-item active">
                             <a class="btn btn-outline-primary" href="/catalog">Каталог</a>
                         </li>
@@ -30,15 +33,15 @@
                         </li>
                         &nbsp; &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/orders">Заказы <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/orders">Заказы <span class="badge badge-light">{{ counters[0] }}</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/cart">Корзина <span class="badge badge-light">{{ counters[1] }}</span></a>
                         </li>
                         &nbsp;
                         <li class="nav-item active">
-                            <a class="btn btn-primary" href="/favorites">Избранное <span class="badge badge-light">0</span></a>
+                            <a class="btn btn-primary" href="/favorites">Избранное <span class="badge badge-light">{{ counters[2] }}</span></a>
                         </li>
                     {% else %}
                         <li class="nav-item active">
