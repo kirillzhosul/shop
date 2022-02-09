@@ -55,6 +55,10 @@ def create(name=None) -> Flask:
     from . import views
     views.register(app)
 
+    # Error handlers.
+    from . import error_handlers
+    error_handlers.register(app)
+
     # Login manager.
     login_manager_init_app(app)
 

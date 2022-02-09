@@ -1,0 +1,53 @@
+{% extends 'base_simple.jinja' %}
+
+{% block title %}{{ code }} {{ name }}{% endblock %}
+
+{% block style %}
+    code {
+        text-align: left;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+{% endblock %}
+
+{% block subname %}
+    {{ name }}
+{% endblock %}
+
+{% block name %}
+    {{ code }}
+{% endblock %}
+
+{% block description %}
+    {% if code == 404 %}
+        <b>Страница которую вы ищите, не существует!</b>
+    {% elif code == 500 %}
+        <b>Приносим извинения, сервер развалился.<b>
+        <h6 class="bg-dark mt-5" style="text-align: left">
+            <code class="text-white" style="text-align: left">
+                <span style="color:#00FF73">gorbachev@ussr:~</span> $ sudo service collapse.ussr status
+                <span style="color:#00FF73">●</span> collapse.ussr.service - Lenin's script
+                    Loaded: loaded (/lib/systemd/system/collapse.ussr.service; enabled; vendor preset: enabled)
+                    Active: <span style="color:#ff0000">inactive (dead)</span> since 1991-12-28 12:38:34 MSK;
+                      Docs: man:ussr(8)
+                  Main PID: 1 (collapse.ussr)
+                     Tasks: 2022 (limit: 1991)
+                       CPU: 69y 2h
+            </code>
+        </h6>
+    {% elif code == 401 %}
+        <b>Авторизуйтесь для продолжения!</b> <br>Если вас не перевело на страницу авторизации - <a href="{{ url_for('auth.index') }}">перейти</a>
+    {% elif code == 403 %}
+        <b>Доступ запрещён!</b><br>Попробуйте другой способ.
+    {% elif code == 418 %}
+        <b>Вы чайник!</b><br>Извините, здесь нет кофе.
+    {% else %}
+        Приносим извинения, произошла неизвестная <b>ошибка</b>!
+    {% endif %}
+{% endblock %}
+
+{% block buttons %}
+    <a class="btn btn-outline-primary btn-lg" href="/">Главная</a>
+    <a class="btn btn-outline-primary btn-lg" href="/catalog">Каталог</a>
+{% endblock %}
+
