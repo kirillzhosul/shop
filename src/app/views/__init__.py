@@ -20,7 +20,9 @@ def register(app: Flask) -> NoReturn:
     from . import auth
     from . import profile
     from . import api
+    from . import developer
 
+    developer.register(app)
     shop.register(app)
     auth.register(app)
     profile.register(app)
