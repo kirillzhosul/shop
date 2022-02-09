@@ -3,7 +3,7 @@
     Merchandise shop application auth views.
 """
 
-from flask import Blueprint
+from flask import Blueprint, redirect, url_for
 from flask_login import login_user
 from ...models.user.user import User
 from ... import db
@@ -11,19 +11,14 @@ from ... import db
 bp_auth = Blueprint("auth", __name__)
 
 
-@bp_auth.route("/auth/debug", methods=["GET"])
-def debug():
+@bp_auth.route("/auth", methods=["GET"])
+def index():
     user = User("test", "test", "test")
     db.session.add(user)
     db.session.commit()
 
     login_user(user)
-    return "OK!"
-
-
-@bp_auth.route("/auth", methods=["GET"])
-def index():
-    return "TBD"
+    return redirect(url_for("profile.index"))
 
 
 @bp_auth.route("/auth/login", methods=["GET"])
