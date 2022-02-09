@@ -14,17 +14,17 @@ class Order(db.Model):
     """
         Represents item order request.
     """
-    id = db.Column(db.Integer, primary_key=True)
+    id: int = db.Column(db.Integer, primary_key=True)
 
-    status = db.Column(db.Integer, nullable=False)  # default -> see constructor.
+    status: int = db.Column(db.Integer, nullable=False)  # default -> see constructor.
 
-    delivery_type = db.Column(db.Integer, nullable=False)
-    delivery_address = db.Column(db.Text, nullable=False)
+    delivery_type: int = db.Column(db.Integer, nullable=False)
+    delivery_address: str = db.Column(db.Text, nullable=False)
 
     customer_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     items = db.relationship("OrderItem", backref="order")  # ON DELETE CASCADE
 
-    date_created = db.Column(db.DateTime(timezone=False), nullable=False)
+    date_created: datetime.datetime = db.Column(db.DateTime(timezone=False), nullable=False)
 
     def __init__(self, customer_id: int, delivery_type: OrderDeliveryType, delivery_address: str):
         self.status = OrderStatus.AWAITING_PAYMENT.value
@@ -41,6 +41,12 @@ class Order(db.Model):
 
     def get_status(self):
         return OrderStatus(self.status)
+
+    def get_delivery_type(self):
+        return OrderDeliveryType(self.delivery_type)
+
+    def get_date_created(self):
+        return self.date_created.strftime("%m.%d.%y %H:%M")
 
     def get_price(self):
         """

@@ -18,18 +18,24 @@
                 <div class="card">
                     <div class="card-title">
                         <p class="display-4">Заказ №{{ order.id }}</p>
+                        <span class="badge badge-dark mb-5">от {{ order.get_date_created() }}</span>
+                        <span class="badge badge-dark mb-5">{{ order.get_delivery_type() }}</span>
+                        <span class="badge badge-dark mb-5">{{ order.delivery_address }}</span>
+
                         <h3>
                             <span class="badge badge-{{ order.get_status().get_color() }}">{{ order.get_status() }}</span>
-                            <span class="badge badge-dark }}"> <b>{{ order.get_price() }}₽</b> x <b>{{ order.get_quantity() }}</b><br></span>
+                            <span class="badge badge-dark"> <b>{{ order.get_price() }}₽</b> x <b>{{ order.get_quantity() }}</b><br></span>
+                            <p class="mt-1">
+                                {% if order.get_status().is_awaiting_payment() %}
+                                    <a class="btn btn-outline-success text-dark" href="/">
+                                        Оплатить
+                                    </a>
+                                    <a class="btn btn-outline-danger text-dark" href="/">
+                                        Отменить
+                                    </a>
+                                {% endif %}
+                            </p>
                         </h3>
-                    {% if order.get_status().is_awaiting_payment() %}
-                        <a class="btn btn-outline-success text-dark" href="/">
-                            Оплатить
-                        </a>
-                        <a class="btn btn-outline-danger text-dark" href="/">
-                            Отменить
-                        </a>
-                    {% endif %}
                     </div>
 
                     <div class="card-body">
