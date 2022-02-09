@@ -14,7 +14,11 @@
             <h1 class="display-4">Корзина</h1>
             <h4>Всего {{ cart_count }} товаров на сумму {{ cart_price }}₽</h4>
             <a class="btn btn-primary text-light" href="/catalog">В каталог</a>
-            <a class="btn btn-success text-light" onclick="orderCart()">Заказать</a>
+            {% if cart_count > 0 %}
+                <a class="btn btn-success text-light" onclick="orderCart()">Заказать</a>
+            {% else %}
+                <a class="btn btn-success text-light disabled">Заказать</a>
+            {% endif %}
         </div>
     </div>
 </div>
