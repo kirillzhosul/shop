@@ -9,6 +9,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+from .config import *
+
 __author__ = "Kirill Zhosul"
 __copyright = "(c) 2022 Kirill Zhosul"
 __license__ = "MIT"
@@ -33,7 +35,7 @@ def login_manager_init_app(app: Flask):
         return User.query.get(int(uid))
 
 
-def create(name=None) -> Flask:
+def create(name=None, cfg: object = ConfigProduction) -> Flask:
     """
     Returns ready to be runned application.
     :param: name Flask import_name, preferred to be omitted.
@@ -42,8 +44,7 @@ def create(name=None) -> Flask:
     app = Flask(name if name else __name__)
 
     # Config.
-    from . import config
-    app.config.from_object(config.ConfigDevelopment)
+    app.config.from_object(cfg)
 
     # Database.
     from . import models

@@ -7,4 +7,5 @@
 import app
 
 if __name__ == "__main__":
-    app.create().run(debug=True, host="0.0.0.0", port=80)
+    wsgi_app = app.create(None, app.config.ConfigProduction)
+    wsgi_app.run(host="0.0.0.0", port=80)
