@@ -1,0 +1,15 @@
+{% extends 'base_simple.jinja' %}
+
+{% block title %}API Статус{% endblock %}
+
+{% block subname %}
+    {{ addr }}
+{% endblock %}
+
+{% block name %}
+    Статус <b>API</b>
+{% endblock %}
+
+{% block description %}
+    База Данных: {% if db_status %} <span class="text-success">Работает</span> {% else %} <span class="text-danger">Не работает</span> {% endif %}
+{% endblock %}

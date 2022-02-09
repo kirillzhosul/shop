@@ -20,3 +20,6 @@ def register(app: Flask) -> NoReturn:
     from . import favorites
     cart.register(app)
     favorites.register(app)
+
+    from .health import bp_api_health
+    app.register_blueprint(bp_api_health)

@@ -105,7 +105,7 @@ def order():
         for cart_item in current_user.cart_items
     ]
 
-    [db.session.add(order_item) for order_item in order_items]
+    db.session.add_all(order_items)
     [db.session.delete(cart_item) for cart_item in current_user.cart_items]
     db.session.commit()
 

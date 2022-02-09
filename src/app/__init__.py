@@ -16,8 +16,8 @@ __copyright = "(c) 2022 Kirill Zhosul"
 __license__ = "MIT"
 
 # Global objects.
-db = SQLAlchemy()
-lm = LoginManager()
+db: SQLAlchemy = SQLAlchemy()
+lm: LoginManager = LoginManager()
 
 
 def login_manager_init_app(app: Flask):
@@ -32,7 +32,11 @@ def login_manager_init_app(app: Flask):
     def user_loader(uid):
         if uid is None or uid == 'None':
             uid = -1
-        return User.query.get(int(uid))
+
+        try:
+            return User.query.get(int(uid))
+        except Exception:
+            return None
 
 
 def create(name=None, cfg: object = ConfigProduction) -> Flask:
