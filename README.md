@@ -1,6 +1,16 @@
 # Web merchandise shop.
-Senior solution for Samara Hackathon IT 2022
+## WIP, TBD. Project is under development. (This is senior case solution for Samara Hackathon IT 2022)
 
-Simple web merchandise shop.
+### This repository contains simple(*) web merchandise shop (Currently only in Russian).
+### Features:
+- Catalog / Categories / Items
+- Cart
+- Orders
+- Favorites
+- Reviews
+- Profile
+- API
 
-TBD. Project is under development
+
+
+![Preivew](preview.png)
