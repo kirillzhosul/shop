@@ -11,47 +11,52 @@
 <div class="container text-center py-5 ">
     <div class="row position-relative">
         <div class="col-lg mx-auto">
-            <h1 class="display-4">Корзина</h1>
-            <h4>Всего {{ cart_count }} товаров на сумму {{ cart_price }}₽</h4>
-            <a class="btn btn-primary text-light" href="/catalog">В каталог</a>
+            <h1 class="display-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                  <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                Корзина
+            </h1>
             {% if cart_count > 0 %}
-                <a class="btn btn-success text-light" onclick="orderCart()">Заказать</a>
-            {% else %}
-                <a class="btn btn-success text-light disabled">Заказать</a>
+                <h4>Всего {{ cart_count }} товаров на сумму {{ cart_price }}₽</h4>
+                <div class="mt-4">
+                    <a class="btn btn-primary text-light btn-lg" href="/catalog">В каталог</a>
+                    <a class="btn btn-success btn-lg text-light" onclick="orderCart()">Оформить заказ</a>
+                </div>
             {% endif %}
+            <hr>
         </div>
     </div>
 </div>
 <div class="container-fluid text-center">
-    <div class="row mx-5">
-        {% for cart_item in user.cart_items %}
-            {% set scores = cart_item.item.get_scores() %}
-            <div class="col-lg-4 mb-5" id="cart-item-{{ cart_item.id }}">
-                <div class="card">
-                    <div class="card-body">
-                        <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17ed5db9200%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17ed5db9200%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.1953125%22%20y%3D%2296.3%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="{{ cart_item.item.title }}">
-                        <h3 class="card-title"><a href="/item?id={{ cart_item.item.id }}" class="link-dark">{{ cart_item.item.title|truncate(16, True) }}</a></h3>
+    {% if cart_count > 0 %}
+        <div class="row mx-5">
+            {% for cart_item in user.cart_items %}
+                {% set scores = cart_item.item.get_scores() %}
+                <div class="col-2 mb-5" id="cart-item-{{ cart_item.id }}">
+                    <div class="card">
+                        <div class="card-header">
+                            <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17ed5db9200%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17ed5db9200%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.1953125%22%20y%3D%2296.3%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="{{ cart_item.item.title }}">
+                            <h3><a href="/item?id={{ cart_item.item.id }}" class="link-dark">{{ cart_item.item.title|truncate(16, True) }}</a></h3>
+                            <b>{{ cart_item.item.get_price_with_discount()[0] }}₽</b> x {{ cart_item.quantity }}<br>
+                        </div>
+                        <div class="card-body">
+                            <a class="btn btn-warning text-light" onclick="removeFromCart({{ cart_item.id }})">Удалить</a>
+                        </div>
 
-                        <span class="card-subtitle text-muted">
-                            <b>{{ cart_item.item.get_price_with_discount()[0] }}₽</b><br>
-                            <a href="/catalog?cid={{ cart_item.item.category_id }}" class="link-dark"><i>{{ cart_item.item.get_category_title() }}</i><br></a>
-                            <a href="/item?id={{ cart_item.item.id }}#reviews">{{ scores[2] }} отзывов</a>
-                        </span>
 
-                        <p class="card-text text-muted mb-3 mt-4">
-                            <a href="/item?id={{ cart_item.item.id }}">
-                                {{ cart_item.item.description|truncate(16, True) }} <!-- |wordwrap(16, true, "<br>") -->
-                            </a>
-                        </p>
-
-                        <a class="btn btn-primary text-light" href="/item?id={{ cart_item.item_id }}">Открыть</a>
-                        <a class="btn btn-warning text-light" onclick="removeFromCart({{ cart_item.id }})">Удалить</a>
                     </div>
-
-
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1 class="text-warning">Ваша корзина пуста!</h1>
+         <a class="btn btn-primary text-light btn-lg" href="/catalog">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+             Искать товары
+         </a>
+    {% endif %}
 </div>
 {% endblock %}

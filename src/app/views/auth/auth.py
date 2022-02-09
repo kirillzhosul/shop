@@ -22,18 +22,8 @@ def index():
     return redirect(url_for("profile.index"))
 
 
-@bp_auth.route("/auth/login", methods=["GET"])
-def login():
-    return "TBD"
-
-
 @bp_auth.route("/auth/logout", methods=["GET"])
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("auth.index"))
-
-
-@bp_auth.route("/auth/register", methods=["GET"])
-def register():
-    return "TBD"

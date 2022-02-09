@@ -36,6 +36,9 @@ class Order(db.Model):
 
         self.date_created = datetime.datetime.now()
 
+    def get_uid(self):
+        return f"{self.customer_id}-{self.id}"
+
     def set_status(self, status: OrderStatus):
         self.status = status.value
 

@@ -1,38 +1,49 @@
 {% extends 'base.jinja' %}
 
-{% block title %}Профиль{% endblock %}
+{% block title %}Личный кабинет{% endblock %}
 
 {% block body %}
 <div class="container text-center py-5 ">
     <div class="row position-relative mb-5">
         <div class="col-lg mx-auto">
-            <h1 class="display-3">Профиль</h1>
+            <h1 class="display-3">Личный кабинет клиента</h1>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col mx-auto text-left">
-            <span class="btn btn-outline-secondary btn-lg disabled">Баланс
-                <span class="badge badge-light">{{ user.balance_real }}₽</span>
-            </span>
-            <a class="btn btn-outline-success" href="#topupBalance">Пополнить</a>
-
+        <div class="col mx-auto">
+            <span class="btn btn-secondary btn-lg disabled mb-1">Баланс</span>
             <br>
 
-            <span class="btn btn-outline-secondary btn-lg disabled mt-1">Бонусов
+            <span class="btn btn-outline-secondary btn-lg disabled">Реальный баланс
+                <span class="badge badge-light">{{ user.balance_real }}₽</span>
+                <a class="badge badge-light" href="/faq/balance/real">?</a>
+            </span>
+            <br>
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">Бонусный баланс
                 <span class="badge badge-light">{{ user.balance_bonus }}₽</span>
+                <a class="badge badge-light" href="/faq/balance/bonus">?</a>
             </span>
         </div>
 
         <div class="col mx-auto">
-            <a class="btn btn-outline-primary btn-lg" href="/orders">Ваши заказы</a>
-            <a class="btn btn-outline-primary btn-lg" href="/catalog">Каталог</a>
+            <span class="btn btn-primary btn-lg disabled mb-1">Навигация</span>
+            <br>
+
+            <a class="btn btn-outline-primary btn-lg mb-1" href="/orders">Ваши заказы</a>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="/cart">Ваша корзина</a><br>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="/favories">Ваши избранные товары</a><br><br>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="/catalog">Каталог</a>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="/faq">ЧАВО</a><br>
         </div>
 
         <div class="col mx-auto">
-            <span class="btn btn-outline-secondary btn-lg disabled">{{ user.name }}</span><br>
-            <span class="btn btn-outline-secondary btn-lg disabled mt-1">{{ user.email }}</span><br>
-            <span class="btn btn-outline-secondary btn-lg disabled mt-1">{{ user.phone }}</span>
+            <span class="btn btn-secondary btn-lg disabled mb-1">Персональная информация</span>
+            <br>
+
+            <span class="btn btn-outline-secondary btn-lg disabled">Имя <span class="badge badge-dark">{{ user.name }}</span></span><br>
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">Почта <span class="badge badge-dark">{{ user.email }}</span></span><br>
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">Телефон <span class="badge badge-dark">{{ user.phone }}</span></span>
         </div>
 
     </div>

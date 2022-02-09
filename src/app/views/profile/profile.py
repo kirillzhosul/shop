@@ -44,12 +44,6 @@ def cart():
                            cart_count=cart_count,
                            cart_price=cart_price)
 
-
-@bp_profile.route("/favorites", methods=["GET"])
-def favorites():
-    return "TBD"
-
-
 @bp_profile.route("/orders", methods=["GET"])
 def orders():
     return render_template("profile/orders.jinja",
