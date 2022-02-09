@@ -4,10 +4,9 @@
 """
 
 from typing import NoReturn, Tuple, Optional
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_login import current_user
 from werkzeug.exceptions import HTTPException
-
 
 NAMES = {
     401: "Unauthorized",
@@ -35,7 +34,8 @@ def handler(error: HTTPException, app: Optional[Flask] = None) -> Tuple[str, int
     return render_template("errors/handler.jinja",
                            code=code,
                            name=NAMES[code],
-                           user=current_user
+                           user=current_user,
+                           addr=request.remote_addr
                            ), code
 
 

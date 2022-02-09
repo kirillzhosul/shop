@@ -11,7 +11,8 @@
 {% endblock %}
 
 {% block subname %}
-    {{ name }}
+    {{ name }}<br>
+    <span class="text-muted"><i>{{ addr }}</i></span>
 {% endblock %}
 
 {% block name %}
@@ -22,7 +23,7 @@
     {% if code == 404 %}
         <b>Страница которую вы ищите, не существует!</b>
     {% elif code == 500 %}
-        <b>Приносим извинения, сервер развалился.<b>
+        <b>Приносим извинения, сервер развалился.</b>
         <h6 class="bg-dark mt-5" style="text-align: left">
             <code class="text-white" style="text-align: left">
                 <span style="color:#00FF73">gorbachev@ussr:~</span> $ sudo service collapse.ussr status
