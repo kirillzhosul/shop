@@ -18,7 +18,7 @@ bp_api_cart = Blueprint("api_cart", __name__)
 
 
 @bp_api_cart.route("/api/cart/add", methods=["GET"])
-def api_cart_add():
+def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
@@ -55,7 +55,7 @@ def api_cart_add():
 
 
 @bp_api_cart.route("/api/cart/get", methods=["GET"])
-def api_cart_get():
+def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
@@ -83,7 +83,7 @@ def api_cart_get():
 
 
 @bp_api_cart.route("/api/cart/order", methods=["GET"])
-def api_cart_order():
+def order():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
@@ -126,7 +126,7 @@ def api_cart_order():
 
 
 @bp_api_cart.route("/api/cart/remove", methods=["GET"])
-def api_cart_remove():
+def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",

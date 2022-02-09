@@ -5,20 +5,19 @@
 
 from flask import Blueprint, render_template
 from flask_login import current_user, login_required
-from ...models.cart_item import CartItem
 from ...models.item.item import Item
 
 bp_profile = Blueprint("profile", __name__)
 
 
 @bp_profile.route("/profile", methods=["GET"])
-def profile_index():
+def index():
     return "TBD"
 
 
 @bp_profile.route("/cart", methods=["GET"])
 @login_required
-def profile_cart():
+def cart():
     cart_count = sum([cart_item.quantity for cart_item in current_user.cart_items])
     cart_price = sum([
         Item.query.filter_by(id=cart_item.item_id).first().get_price_with_discount()[0]
@@ -32,11 +31,11 @@ def profile_cart():
 
 
 @bp_profile.route("/favorites", methods=["GET"])
-def profile_favorites():
+def favorites():
     return "TBD"
 
 
 @bp_profile.route("/orders", methods=["GET"])
-def profile_orders():
+def orders():
     return render_template("profile/orders.jinja",
                            user=current_user)

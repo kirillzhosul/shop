@@ -16,7 +16,7 @@ bp_api_favorites = Blueprint("api_favorites", __name__)
 
 
 @bp_api_favorites.route("/api/favorites/add", methods=["GET"])
-def api_favorites_add():
+def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
@@ -39,7 +39,7 @@ def api_favorites_add():
 
 
 @bp_api_favorites.route("/api/favorites/get", methods=["GET"])
-def api_favorites_get():
+def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
@@ -60,7 +60,7 @@ def api_favorites_get():
 
 
 @bp_api_favorites.route("/api/favorites/remove", methods=["GET"])
-def api_favorites_remove():
+def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",

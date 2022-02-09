@@ -12,7 +12,7 @@ bp_auth = Blueprint("auth", __name__)
 
 
 @bp_auth.route("/auth/debug", methods=["GET"])
-def auth_debug():
+def debug():
     user = User("test", "test", "test")
     db.session.add(user)
     db.session.commit()
@@ -22,15 +22,15 @@ def auth_debug():
 
 
 @bp_auth.route("/auth", methods=["GET"])
-def auth_index():
+def index():
     return "TBD"
 
 
 @bp_auth.route("/auth/login", methods=["GET"])
-def auth_login():
+def login():
     return "TBD"
 
 
 @bp_auth.route("/auth/register", methods=["GET"])
-def auth_register():
+def register():
     return "TBD"

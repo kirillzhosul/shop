@@ -11,7 +11,7 @@ bp_item = Blueprint("item", __name__)
 
 
 @bp_item.route("/item", methods=["GET"])
-def item_index():
+def index():
     args_id = request.args.get("id", type=int, default=0)
 
     db_item = Item.query.filter_by(id=args_id).first_or_404()

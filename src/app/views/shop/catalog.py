@@ -13,7 +13,7 @@ bp_catalog = Blueprint("catalog", __name__)
 
 
 @bp_catalog.route("/catalog", methods=["GET"])
-def catalog_index():
+def index():
     args_limit = request.args.get("l", type=int, default=9)
     args_offset = request.args.get("o", type=int, default=0)
     args_query = request.args.get("q", type=str, default="")
@@ -36,7 +36,7 @@ def catalog_index():
 
 
 @bp_catalog.route("/categories", methods=["GET"])
-def catalog_categories():
+def categories():
     args_limit = request.args.get("l", type=int, default=99)
     args_offset = request.args.get("o", type=int, default=0)
 
@@ -51,7 +51,7 @@ def catalog_categories():
 
 
 @bp_catalog.route("/catalog/debug", methods=["GET"])
-def catalog_debug():
+def debug():
     from random import randrange
     for _ in range(30):
         # title = "".join([chr(randrange(1072, 1103, 1)) for _ in range(30)])
