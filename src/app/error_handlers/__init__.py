@@ -19,7 +19,7 @@ NAMES = {
 }
 
 
-def raise_error(code: int, description: Optional[str]):
+def raise_error(code: int, description: Optional[str] = None):
     error = HTTPException(
         description,
         None
