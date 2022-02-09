@@ -1,0 +1,40 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5 ">
+    <div class="row position-relative mb-5">
+        <div class="col-lg mx-auto">
+            <h1 class="display-3">Профиль</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col mx-auto text-left">
+            <span class="btn btn-outline-secondary btn-lg disabled">Баланс
+                <span class="badge badge-light">{{ user.balance_real }}₽</span>
+            </span>
+            <a class="btn btn-outline-success" href="#topupBalance">Пополнить</a>
+
+            <br>
+
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">Бонусов
+                <span class="badge badge-light">{{ user.balance_bonus }}₽</span>
+            </span>
+        </div>
+
+        <div class="col mx-auto">
+            <a class="btn btn-outline-primary btn-lg" href="/orders">Ваши заказы</a>
+            <a class="btn btn-outline-primary btn-lg" href="/catalog">Каталог</a>
+        </div>
+
+        <div class="col mx-auto">
+            <span class="btn btn-outline-secondary btn-lg disabled">{{ user.name }}</span><br>
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">{{ user.email }}</span><br>
+            <span class="btn btn-outline-secondary btn-lg disabled mt-1">{{ user.phone }}</span>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

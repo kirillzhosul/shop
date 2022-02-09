@@ -3,16 +3,31 @@
     Merchandise shop application profile views.
 """
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from flask_login import current_user, login_required
+
+from ...error_handlers.raise_error import raise_error
+
 from ...models.item.item import Item
+from ...models.user.user import User
 
 bp_profile = Blueprint("profile", __name__)
 
 
 @bp_profile.route("/profile", methods=["GET"])
 def index():
-    return "TBD"
+    user = None
+    user_id = request.args.get("id", type=int, default=0)
+    if user_id != 0:
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return raise_error(404, "Профиль пользователя с данным id не найден!")
+        return raise_error(403, "На данный момент нет возможности просмотра чужих профилей!")
+
+    if user is None:
+        user = current_user
+
+    return render_template("profile/index.jinja", user=user)
 
 
 @bp_profile.route("/cart", methods=["GET"])

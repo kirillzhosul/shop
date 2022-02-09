@@ -28,6 +28,13 @@ def login_manager_init_app(app: Flask):
     from .models.user.user import User  # pylint: disable=import-outside-toplevel, unused-import
     lm.init_app(app)
 
+    lm.login_view = "auth.login"
+    # lm.refresh_view = "auth.refresh"
+    lm.login_message = "Пожалуйста авторзийтесь для продолжения!"
+    lm.needs_refresh_message = (
+        u"Для безопасности, войдите заного в свой аккаунт для продолжения."
+    )
+
     @lm.user_loader
     def user_loader(uid):
         if uid is None or uid == 'None':

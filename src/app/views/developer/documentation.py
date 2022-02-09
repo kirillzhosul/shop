@@ -7,8 +7,6 @@ from jinja2 import exceptions
 from flask import Blueprint, url_for, render_template, redirect
 from flask_login import current_user
 
-from ...error_handlers import raise_error
-
 bp_dev_docs = Blueprint("dev_docs", __name__)
 
 
