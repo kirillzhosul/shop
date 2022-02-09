@@ -1,0 +1,29 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Разработчикам{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5 ">
+    <div class="row position-relative py-5">
+        <div class="col-lg mx-auto">
+            <h6 class="text-uppercase text-primary">Документация сайта, публичного API</h6>
+            <h1 class="display-1 mb-5">Разработчикам</b></h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg mx-auto mt-5">
+            <h1 class="mb-5 display-4">Сайт имеет публичный <b>API</b>, с помощью которого вы можете интегрировать возможности сайта в свой продукт</b></h1>
+            <a class="btn btn-outline-primary btn-lg" href="/dev/rules"><b>Правила</b></a>
+            <div class="mt-1">
+                <a class="btn btn-outline-primary btn-lg" href="/dev/guide">Гид по <b>API</b></a>
+                <a class="btn btn-outline-primary btn-lg" href="/dev/methods"><i>Методы</i> <b>API</b></a>
+            </div>
+            <div class="mt-1">
+                <a class="btn btn-outline-secondary btn-lg" href="/dev/response">Формат ответов <b>API</b></a>
+                <a class="btn btn-outline-secondary btn-lg" href="/dev/widgets">Виджеты на ваш сайт</a>
+                <a class="btn btn-outline-secondary btn-lg" href="/dev/client">Разработка сторонних клиентов</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
