@@ -44,6 +44,7 @@ def cart():
                            cart_count=cart_count,
                            cart_price=cart_price)
 
+
 @bp_profile.route("/orders", methods=["GET"])
 def orders():
     return render_template("profile/orders.jinja",

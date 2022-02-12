@@ -8,7 +8,7 @@ from flask import Flask
 from werkzeug.exceptions import HTTPException
 
 from .handler import handler
-from .names import NAMES
+from .names import CODES
 
 
 def register(app: Flask) -> NoReturn:
@@ -21,5 +21,5 @@ def register(app: Flask) -> NoReturn:
     def __handler(error: HTTPException) -> Tuple[str, int]:
         return handler(error, app)
 
-    for code in NAMES.keys():
+    for code in CODES:
         app.errorhandler(code)(__handler)
