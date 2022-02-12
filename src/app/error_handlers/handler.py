@@ -3,17 +3,15 @@
     Merchandise shop error handler.
 """
 
-from typing import Tuple, Optional
-from flask import Flask, render_template, request, redirect, url_for
+from typing import Tuple
+from flask import render_template, request, redirect, url_for
 from flask_login import current_user
 from werkzeug.exceptions import HTTPException
 
 from .names import NAMES
 
 
-def __handle(error: HTTPException, app: Optional[Flask]):
-    if app:
-        app.logger.error(error.description)
+def __handle(error: HTTPException):
     return getattr(error, "code", 500)
 
 
@@ -30,6 +28,6 @@ def __render(code):
     ), code
 
 
-def handler(error: HTTPException, app: Optional[Flask] = None) -> Tuple[str, int]:
-    return __render(__handle(error, app))
+def handler(error: HTTPException) -> Tuple[str, int]:
+    return __render(__handle(error))
 
