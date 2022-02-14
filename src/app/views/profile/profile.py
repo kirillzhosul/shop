@@ -15,6 +15,7 @@ bp_profile = Blueprint("profile", __name__)
 
 
 @bp_profile.route("/profile", methods=["GET"])
+@login_required
 def index():
     user = None
     user_id = request.args.get("id", type=int, default=0)
@@ -46,6 +47,7 @@ def cart():
 
 
 @bp_profile.route("/orders", methods=["GET"])
+@login_required
 def orders():
     return render_template("profile/orders.jinja",
                            user=current_user)
