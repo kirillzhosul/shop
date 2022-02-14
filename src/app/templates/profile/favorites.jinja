@@ -1,0 +1,60 @@
+{% extends 'base.jinja' %}
+
+{% block title %}Избранное{% endblock %}
+
+{% block include %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/favorites.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+<div class="container text-center py-5 ">
+    <div class="row position-relative">
+        <div class="col-lg mx-auto">
+            <h1 class="display-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                  <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                  <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                </svg>
+                Избранное
+            </h1>
+            {% if favorites_count > 0 %}
+                <h4>Всего {{ favorites_count }} избранных товаров</h4>
+                <div class="mt-4">
+                    <a class="btn btn-primary text-light btn-lg" href="/catalog">В каталог</a>
+                </div>
+            {% endif %}
+            <hr>
+        </div>
+    </div>
+</div>
+<div class="container-fluid text-center">
+    {% if favorites_count > 0 %}
+        <div class="row mx-5">
+            {% for favorite_item in user.favorite_items %}
+                {% set scores = favorite_item.item.get_scores() %}
+                <div class="col-2 mb-5" id="favorite-item-{{ favorite_item.id }}">
+                    <div class="card">
+                        <div class="card-header">
+                            <img class="card-img-top" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17ed5db9200%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17ed5db9200%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.1953125%22%20y%3D%2296.3%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="{{ favorite_item.item.title }}">
+                            <h3><a href="/item?id={{ favorite_item.item.id }}" class="link-dark">{{ favorite_item.item.title|truncate(16, True) }}</a></h3>
+                            <b>{{ favorite_item.item.get_price_with_discount()[0] }}₽</b><br>
+                        </div>
+                        <div class="card-body">
+                            <a class="btn btn-warning text-light" onclick="removeFromFavorites({{ favorite_item.id }})">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1 class="text-warning">У вас нет избранных товаров!</h1>
+         <a class="btn btn-primary text-light btn-lg" href="/catalog">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+             Искать товары
+         </a>
+    {% endif %}
+</div>
+{% endblock %}

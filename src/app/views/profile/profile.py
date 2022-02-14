@@ -46,6 +46,16 @@ def cart():
                            cart_price=cart_price)
 
 
+@bp_profile.route("/favorites", methods=["GET"])
+@login_required
+def favorites():
+    favorites_count = len(current_user.favorite_items)
+
+    return render_template("profile/favorites.jinja",
+                           favorites_count=favorites_count,
+                           user=current_user)
+
+
 @bp_profile.route("/orders", methods=["GET"])
 @login_required
 def orders():
