@@ -3,10 +3,6 @@ function addToCart(item_id){
         if ("error" in data){
             return; // TODO ERROR.
         }
-
-        cart_item_id = data.cart_item_id;
-
-        return;
     });
 }
 

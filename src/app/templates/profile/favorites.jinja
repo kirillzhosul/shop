@@ -5,6 +5,7 @@
 {% block include %}
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/favorites.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js')}}"></script>
 {% endblock %}
 
 {% block body %}
@@ -41,6 +42,7 @@
                             <b>{{ favorite_item.item.get_price_with_discount()[0] }}₽</b><br>
                         </div>
                         <div class="card-body">
+                            <a class="btn btn-primary text-light" onclick="addToCart({{ favorite_item.item.id }})">В корзину</a>
                             <a class="btn btn-warning text-light" onclick="removeFromFavorites({{ favorite_item.id }})">Удалить</a>
                         </div>
                     </div>
