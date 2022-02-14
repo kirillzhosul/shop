@@ -2,6 +2,11 @@
 
 {% block title %}{{ item.title }}{% endblock %}
 
+{% block include %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/cart.js')}}"></script>
+{% endblock %}
+
 {% block body %}
 <div class="container text-center py-5 ">
     <div class="row position-relative mb-5">
@@ -21,7 +26,7 @@
     <div class="row">
         <div class="col-lg mx-auto">
             <h4 class="mb-5">{{ item.description }}</h4>
-            <a class="btn btn-outline-primary btn-lg" onclick="{}">В корзину</a>
+            <a class="btn btn-primary btn-lg text-light" onclick="addToCart({{ item.id }})">В корзину</a>
             <a class="btn btn-outline-primary btn-lg" href="/catalog">Назад в каталог</a>
         </div>
     </div>
