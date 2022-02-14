@@ -7,6 +7,9 @@ from jinja2 import exceptions
 from flask import Blueprint, url_for, render_template, redirect
 from flask_login import current_user
 
+from ...error_handlers.raise_error import raise_error
+
+
 bp_dev_docs = Blueprint("dev_docs", __name__)
 
 
@@ -21,9 +24,7 @@ def page(name):
         # Is this is potential exploit?.
         return render_template(f"dev/{name}.jinja", user=current_user)
     except exceptions.TemplateNotFound:
-        return "<html><head><title>404 Not Found</title></head><body>" \
-               "<h1>Not Found</h1><p>The requested URL was not found on the server. " \
-               "If you entered the URL manually please check your spelling and try again.</p></body></html>", 404
+        return raise_error(404, "Developer documentation page does not exists!")
 
 
 @bp_dev_docs.route("/developer")
