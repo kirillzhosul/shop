@@ -149,4 +149,20 @@ def remove():
     return jsonify({
     }), 200
 
+
+@bp_api_cart.route("/api/cart/clear", methods=["GET"])
+def clear():
+    if not current_user.is_authenticated:
+        return jsonify({
+            "error": "Авторизуйтесь для выполнения запроса!",
+            "authentication_required": True
+        }), 401
+
+    for cart_item in current_user.cart_items:
+        db.session.delete(cart_item)
+    db.session.commit()
+
+    return jsonify({
+    }), 200
+
 # TODO Quantity cart API.

@@ -31,3 +31,15 @@ function orderCart(){
         return;
     });
 }
+
+function clearCart(){
+    $.get("/api/cart/clear", function(data, status){
+        if ("error" in data){
+            return; // TODO ERROR.
+        }
+
+        // TODO AJAX(?????).
+        window.location.reload();
+        return;
+    })
+}
