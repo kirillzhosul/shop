@@ -23,7 +23,7 @@ def __render(code):
 
     return render_template(
         "errors/handler.jinja",
-        code=code, addr=request.remote_addr,
+        code=code, addr=request.remote_addr, path=request.path,
         name=name, user=current_user
     ), code
 

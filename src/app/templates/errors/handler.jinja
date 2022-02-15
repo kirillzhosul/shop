@@ -12,7 +12,8 @@
 
 {% block subname %}
     {{ name }}<br>
-    <span class="text-muted"><i>{{ addr }}</i></span>
+    <span class="text-muted"><i>{{ addr }}</i></span><br>
+    <span class="text-danger"><i>{{ path }}</i></span>
 {% endblock %}
 
 {% block name %}
@@ -20,9 +21,7 @@
 {% endblock %}
 
 {% block description %}
-    {% if code == 404 %}
-        <b>Страница которую вы ищите, не существует!</b>
-    {% elif code == 500 %}
+    {% if code >= 500 %}
         <b>Приносим извинения, сервер развалился.</b>
         <h6 class="bg-dark mt-5" style="text-align: left">
             <code class="text-white" style="text-align: left">
@@ -36,14 +35,18 @@
                        CPU: 69y 2h
             </code>
         </h6>
-    {% elif code == 401 %}
-        <b>Авторизуйтесь для продолжения!</b> <br>Если вас не перевело на страницу авторизации - <a href="{{ url_for('auth.index') }}">перейти</a>
-    {% elif code == 403 %}
-        <b>Доступ запрещён!</b><br>Попробуйте другой способ.
-    {% elif code == 418 %}
-        <b>Извините, но я чайник!</b><br>Я не могу приготовить кофе...
     {% else %}
-        Приносим извинения, произошла неизвестная <b>ошибка</b>!
+        {% if code == 404 %}
+            <b>Страница <span class="text-danger"><i>{{ path }}</i></span> которую вы ищите, не существует!</b>
+        {% elif code == 401 %}
+            <b>Авторизуйтесь для продолжения!</b> <br>Если вас не перевело на страницу авторизации - <a href="{{ url_for('auth.index') }}">перейти</a>
+        {% elif code == 403 %}
+            <b>Доступ запрещён!</b><br>Попробуйте другой способ.
+        {% elif code == 418 %}
+            <b>Извините, но я чайник!</b><br>Я не могу приготовить кофе...
+        {% else %}
+            Приносим извинения, произошла неизвестная<b>ошибка</b>!
+        {% endif %}
     {% endif %}
 {% endblock %}
 
