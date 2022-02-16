@@ -3,7 +3,7 @@
     Merchandise shop application favorites API views.
 """
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, url_for
 from flask_login import current_user
 
 from ....models.favorite_item import FavoriteItem
@@ -20,7 +20,8 @@ def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     item_id = request.args.get("item_id", type=int, default=0)
     item = Item.query.filter_by(id=item_id).first()
@@ -43,7 +44,8 @@ def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     favorite_items = [
         {
@@ -64,7 +66,8 @@ def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     favorite_item_id = request.args.get("favorite_item_id", type=int, default=0)
     favorite_item = FavoriteItem.query.filter_by(id=favorite_item_id).first()

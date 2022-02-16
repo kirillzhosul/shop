@@ -3,7 +3,7 @@
     Merchandise shop application cart API views.
 """
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, url_for
 from flask_login import current_user
 
 from ....models.cart_item import CartItem
@@ -22,7 +22,8 @@ def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     item_id = request.args.get("item_id", type=int, default=0)
     item = Item.query.filter_by(id=item_id).first()
@@ -59,7 +60,8 @@ def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     total_quantity = sum([cart_item.quantity for cart_item in current_user.cart_items])
     cart_price = sum([
@@ -87,7 +89,8 @@ def order():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
 
     if len(current_user.cart_items) <= 0:
@@ -130,7 +133,8 @@ def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
     cart_item_id = request.args.get("cart_item_id", type=int, default=0)
     cart_item = CartItem.query.filter_by(id=cart_item_id).first()
@@ -155,7 +159,8 @@ def clear():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "authentication_required": True
+            "redirect_to": url_for("auth.index"),
+            "auth_required": True
         }), 401
 
     for cart_item in current_user.cart_items:

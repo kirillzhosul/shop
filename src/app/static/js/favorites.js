@@ -1,21 +1,11 @@
 function addToFavorites(item_id){
-    $.get("/api/favorites/add?item_id=" + item_id.toString(), function(data, status){
-        if ("error" in data){
-            return; // TODO ERROR.
-        }
-    });
+    requestApi("favorites/add", "item_id=" + item_id.toString(), function(data, status){});
 }
 
 function removeFromFavorites(favorite_item_id){
-    $.get("/api/favorites/remove?favorite_item_id=" + favorite_item_id.toString(), function(data, status){
-        if ("error" in data){
-            return; // TODO ERROR.
-        }
-
-        document.getElementById("favorite-item-" + favorite_item_id.toString()).remove();
-
+    requestApi("favorites/remove", "favorite_item_id=" + favorite_item_id.toString(), function(data, status){
         // TODO AJAX.
+        // document.getElementById("favorite-item-" + favorite_item_id.toString()).remove();
         window.location.reload();
-        return;
     });
 }
