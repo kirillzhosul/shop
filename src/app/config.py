@@ -9,13 +9,15 @@ import os
 
 # Base config.
 class Config:
-    SECRET_KEY = "very-strong-secret-key-for-hackers"
-    FLASK_SECRET_KEY = SECRET_KEY
+    # Secret key, should be rewritten
+    SECRET_KEY = os.urandom(12).hex()
 
+    # Utils.
+    FLASK_SECRET_KEY = SECRET_KEY
+    JSON_AS_ASCII = False
     DEBUG = False
 
-    JSON_AS_ASCII = False
-
+    # Database.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_FILENAME = "database\\database.db"
     SQLALCHEMY_DATABASE_FILEPATH = os.path.join(os.path.abspath(os.path.dirname(__file__)),
@@ -25,9 +27,11 @@ class Config:
 
 # Config, that should be used for development purposes.
 class ConfigDevelopment(Config):
+    SECRET_KEY = os.getenv("FLASK_SECRET_KEY") or "development-secret-key"
     DEBUG = True
 
 
 # Config, that should be used for production.
 class ConfigProduction(Config):
+    SECRET_KEY = os.getenv("MERCHANDISE_SHOP_SECRET_KEY")
     DEBUG = False
