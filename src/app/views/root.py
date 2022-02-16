@@ -25,6 +25,16 @@ def contacts():
     return render_template("root/contacts.jinja", user=current_user)
 
 
+@bp_root.route("/legal/privacy", methods=["GET"])
+def legal_privacy():
+    return render_template("legal/privacy.jinja", user=current_user)
+
+
+@bp_root.route("/legal/agreement", methods=["GET"])
+def legal_agreement():
+    return render_template("legal/agreement.jinja", user=current_user)
+
+
 @bp_root.route("/error", methods=["GET"])
 def error():
     code = request.args.get("c", type=int, default=404)
