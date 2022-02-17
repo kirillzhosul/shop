@@ -4,10 +4,14 @@
     Represents shop item.
 """
 
+from typing import Union, Tuple, List
+
 import datetime
-from ... import db
+
 from ..review.review import ReviewMark
 from ..category import Category
+
+from ... import db
 
 
 class Item(db.Model):
@@ -72,8 +76,40 @@ class Item(db.Model):
 
         return bad_reviews, good_reviews, all_reviews
 
-    def get_category_title(self):
+    def get_category_title(self) -> str:
+        """
+        Returns current item category title.
+        :return: Own category title.
+        """
         return Category.query.filter_by(id=self.category_id).first().title
 
-    def get_icon(self):
-        pass
+    @staticmethod
+    def search(query: str, category_id: int, limit: int, offset: int) -> Tuple[List, int]:
+        """
+        Returns all items with given search query.
+        :param query: String with query.
+        :param category_id: ID of the category, or 0 if it should be skipped.
+        :param limit: Database load limit.
+        :param offset: Database offset to load.
+        :return: Tuple with items list and items count.
+        """
+        db_filter = Item.query.filter(Item.title.ilike(f"%{query}%"))
+        if category_id != 0:
+            db_filter = db_filter.filter_by(category_id=category_id)
+
+        db_items = db_filter.limit(limit).offset(offset).all()
+        db_count = db_filter.count()
+
+        return db_items, db_count
+
+    @staticmethod
+    def get_by_id(item_id) -> Union["Item", None]:
+        """
+        Returns item or None if not found.
+        :param item_id: ID of the item.
+        :return: Item  object or None if was not found.
+        """
+        if item_id == 0 or item_id is None:
+            return None
+
+        return Item.query.filter_by(id=item_id).first() or None

@@ -19,19 +19,14 @@ def index():
     args_query = request.args.get("q", type=str, default="")
     args_category_id = request.args.get("cid", type=int, default=0)
 
-    db_filter = Item.query.filter(Item.title.ilike(f"%{args_query}%"))
-    if args_category_id != 0:
-        db_filter = db_filter.filter_by(category_id=args_category_id)
+    db_items, db_count = Item.search(args_query, args_category_id,
+                                     args_limit, args_offset)
+    db_category = Category.get_category_by_id(args_category_id)
 
-    db_items = db_filter.limit(args_limit).offset(args_offset).all()
-    db_count = db_filter.count()
-
-    category = None if args_category_id == 0 else Category.query.filter_by(id=args_category_id).first()
     return render_template("catalog/index.jinja",
-                           items=db_items,
-                           count=db_count,
+                           items=db_items, count=db_count,
+                           category=db_category,
                            query=args_query,
-                           category=category,
                            user=current_user)
 
 
@@ -40,9 +35,7 @@ def categories():
     args_limit = request.args.get("l", type=int, default=99)
     args_offset = request.args.get("o", type=int, default=0)
 
-    db_filter = Category.query.limit(args_limit).offset(args_offset)
-    db_items = db_filter.all()
-    db_count = db_filter.count()
+    db_items, db_count = Category.get_paginated(args_limit, args_offset)
 
     return render_template("catalog/categories.jinja",
                            categories=db_items,
