@@ -30,6 +30,11 @@ def register():
     return render_template("auth/register.jinja", user=current_user)
 
 
+@bp_auth.route("/auth/recovery", methods=["GET"])
+def recovery():
+    return redirect(url_for("auth.index"))
+
+
 @bp_auth.route("/auth/logout", methods=["GET"])
 @login_required
 def logout():
