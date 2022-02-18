@@ -20,7 +20,7 @@ def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     item_id = request.args.get("item_id", type=int, default=0)
@@ -44,7 +44,7 @@ def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     favorite_items = [
@@ -66,7 +66,7 @@ def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     favorite_item_id = request.args.get("favorite_item_id", type=int, default=0)

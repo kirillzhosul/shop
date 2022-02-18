@@ -18,6 +18,8 @@ def register(app: Flask) -> NoReturn:
     """
     from . import cart
     from . import favorites
+    from . import auth
+    auth.register(app)
     cart.register(app)
     favorites.register(app)
 

@@ -22,7 +22,7 @@ def add():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     item_id = request.args.get("item_id", type=int, default=0)
@@ -60,7 +60,7 @@ def get():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     total_quantity = sum([cart_item.quantity for cart_item in current_user.cart_items])
@@ -89,7 +89,7 @@ def order():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
 
@@ -133,7 +133,7 @@ def remove():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
     cart_item_id = request.args.get("cart_item_id", type=int, default=0)
@@ -159,7 +159,7 @@ def clear():
     if not current_user.is_authenticated:
         return jsonify({
             "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.index"),
+            "redirect_to": url_for("auth.login"),
             "auth_required": True
         }), 401
 

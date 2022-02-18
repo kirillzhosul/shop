@@ -1,0 +1,33 @@
+{% extends 'base_simple.jinja' %}
+
+{% block title %}Авторизация{% endblock %}
+
+{% block subname %}
+    Авторизация<br>
+{% endblock %}
+
+{% block name %}
+    <div class="display-3">
+        Авторизуйтесь для продолжения
+    </div>
+{% endblock %}
+
+{% block description %}
+    <span class="text-muted">
+        Выберите способ авторизации
+    </span>
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}">Войти в существующий аккаунт</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Зарегистрировать новый аккаунт</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block buttons %}
+    <a class="btn btn-outline-primary btn-lg" href="/legal/privacy">Политика конфиденциальности</a>
+    <a class="btn btn-outline-primary btn-lg" href="/legal/agreement">Пользовательское соглашение</a>
+{% endblock %}
+
