@@ -1,6 +1,6 @@
 #!usr/bin/python
 """
-    Merchandise shop application favorites API views.
+    Merchandise shop application auth API views.
 """
 
 from flask import Blueprint, request, jsonify, url_for
