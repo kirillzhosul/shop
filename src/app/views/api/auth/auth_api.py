@@ -46,7 +46,8 @@ def login():
         "user": {
             "id": user.id,
             "email": user.email
-        }
+        },
+        "redirect_to": url_for("profile.index")
     }), 200
 
 
@@ -97,7 +98,8 @@ def register():
             "name":  user.name,
             "phone":  user.phone
         },
-        "already_login": not reject_auto_login
+        "already_login": not reject_auto_login,
+        "redirect_to": url_for("auth.login" if reject_auto_login else "profile.index")
     }), 200
 
 
@@ -113,4 +115,5 @@ def logout():
     logout_user()
 
     return jsonify({
+        "redirect_to": url_for("auth.index")
     }), 200

@@ -1,7 +1,7 @@
 function handleError(data, status){
     if (!("error" in data)) return;
 
-    if ("auth_required" in data && "redirect_to" in data){
+    if ("redirect_to" in data){
         window.location = data["redirect_to"];
     }
 }
