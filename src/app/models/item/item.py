@@ -62,7 +62,7 @@ class Item(db.Model):
         if percent <= 0:
             return self.price, percent
 
-        price_with_discount = int(self.price * (percent / 100))
+        price_with_discount = self.price - int(self.price * (percent / 100))
         return price_with_discount, percent, self.price
 
     def get_scores(self):
