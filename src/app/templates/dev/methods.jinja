@@ -1,0 +1,58 @@
+{% extends 'dev/base.jinja' %}
+
+{% block name %}
+    Методы
+{% endblock %}
+
+{% block description %}
+<div class="row justify-content-center">
+    <div class="col-auto">
+      <table class="table table-responsive">
+          <tr>
+            <th>Auth</th>
+          </tr>
+          <tr>
+            <td>auth.login</td>
+          </tr>
+          <tr>
+            <td>auth.register</td>
+          </tr>
+          <tr>
+            <td>auth.logout</td>
+          </tr>
+
+          <tr>
+            <th>Favorites</th>
+          </tr>
+          <tr>
+            <td>favorites.add</td>
+          </tr>
+          <tr>
+            <td>favorites.get</td>
+          </tr>
+          <tr>
+            <td>favorites.remove</td>
+          </tr>
+          <tr>
+            <th>Cart</th>
+          </tr>
+          <tr>
+            <td>cart.add</td>
+          </tr>
+          <tr>
+            <td>cart.get</td>
+          </tr>
+          <tr>
+            <td>cart.order</td>
+          </tr>
+          <tr>
+            <td>cart.remove</td>
+          </tr>
+          <tr>
+            <td>cart.clear</td>
+          </tr>
+      </table>
+    </div>
+</div>
+{% endblock %}
+

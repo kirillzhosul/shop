@@ -1,13 +1,4 @@
-{% extends 'base_simple.jinja' %}
-
-{% block title %}Разработчикам{% endblock %}
-
-{% block subname %}
-    Документация сайта, публичного <b>API</b>
-    <p class="text-danger">
-        На данный момент документация находится в разработке!
-    </p>
-{% endblock %}
+{% extends 'dev/base.jinja' %}
 
 {% block name %}
     Разработчикам
@@ -16,17 +7,3 @@
 {% block description %}
     Сайт имеет публичный <b>API</b>, с помощью которого вы можете интегрировать возможности сайта в свой продукт
 {% endblock %}
-
-{% block buttons %}
-    <a class="btn btn-outline-primary btn-lg disabled" href="/dev/rules"><b>Правила</b></a>
-    <div class="mt-1">
-        <a class="btn btn-outline-primary btn-lg disabled" href="/dev/guide">Гид по <b>API</b></a>
-        <a class="btn btn-outline-primary btn-lg disabled" href="/dev/methods"><i>Методы</i> <b>API</b></a>
-    </div>
-    <div class="mt-1">
-        <a class="btn btn-outline-secondary btn-lg disabled" href="/dev/response">Формат ответов <b>API</b></a>
-        <a class="btn btn-outline-secondary btn-lg disabled" href="/dev/widgets">Виджеты на ваш сайт</a>
-        <a class="btn btn-outline-secondary btn-lg disabled" href="/dev/client">Разработка сторонних клиентов</a>
-    </div>
-{% endblock %}
-

@@ -1,0 +1,10 @@
+{% extends 'dev/base.jinja' %}
+
+{% block name %}
+    Правила
+{% endblock %}
+
+{% block description %}
+    На использование публичного API сайта, распроняются общие <a href="{{ url_for('legal.agreement') }}">условия пользования</a> а так же <a href="{{ url_for('legal.privacy') }}">политика конфиденциальности</a>
+{% endblock %}
+
