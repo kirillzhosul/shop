@@ -44,6 +44,7 @@
 <div class="container-fluid text-center">
     <div class="row mx-5">
         {% for item in items %}
+            {% set price = item.get_price_with_discount() %}
             {% set scores = item.get_scores() %}
             <div class="col-lg-3 mb-5">
                 <div class="card">
@@ -54,11 +55,19 @@
                         </a></h3>
 
                         <div class="card-subtitle">
-                            <b>{{ item.get_price_with_discount()[0] }}₽</b><br>
+                            <h4 class="mt-2">
+                                <b>{{ price[0] }}</b>₽
+                                {% if price[1] > 0 %}
+                                    <strike class="text-muted">{{ price[2] }}₽</strike>
+                                    <br>
+                                    <span class="text-danger">- {{ price[1] }}%</span>
+                                {% endif %}
+                            </h4>
+                            <br>
                             <a href="/catalog?cid={{ item.category_id }}"><i>{{ item.get_category_title() }}</i><br></a>
                             <a href="/item?id={{ item.id}}#reviews">{{ scores[2] }} отзывов</a>
                         </div>
-                    </div>
+                        </div>
                     <div class="card-body">
                         <p>
                             <a class="card-text text-muted mb-3" href="/item?id={{ item.id }}">

@@ -35,7 +35,14 @@
 
             {% set price = item.get_price_with_discount() %}
             {% set scores = item.get_scores() %}
-            <h4 class="mt-2">{{ price[0] }}₽ {% if price[1] > 0 %}<span class="text-danger">- {{ price[1] }}%</span> {% endif %}</h4>
+            <h4 class="mt-2">
+                <b>{{ price[0] }}</b>₽
+                {% if price[1] > 0 %}
+                    <strike class="text-muted">{{ price[2] }}₽</strike>
+                    <br>
+                    <span class="text-danger">- {{ price[1] }}%</span>
+                {% endif %}
+            </h4>
             <a href="#reviews" id="reviewsButton">{{ scores[2] }} отзывов </a>
         </div>
     </div>

@@ -46,6 +46,8 @@ def categories():
 @bp_catalog.route("/catalog/debug", methods=["GET"])
 def debug():
     from random import randrange, choice
+    from ...models.discount import Discount
+
     for _ in range(30):
         category = Category(choice([
             "Кружка ",
@@ -74,4 +76,8 @@ def debug():
         item = Item(title, description, "{}", randrange(1, 9999, 1), randrange(1, 9999, 1), randrange(1, 30))
         db.session.add(item)
         db.session.commit()
+
+        if choice([True, False]):
+            db.session.add(Discount(randrange(5, 95, 1), item.id))
+            db.session.commit()
     return "OK!"
