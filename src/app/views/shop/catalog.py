@@ -45,19 +45,31 @@ def categories():
 
 @bp_catalog.route("/catalog/debug", methods=["GET"])
 def debug():
-    from random import randrange
+    from random import randrange, choice
     for _ in range(30):
-        # title = "".join([chr(randrange(1072, 1103, 1)) for _ in range(30)])
-        title = "название_категории"
-
-        category = Category(title)
+        category = Category(choice([
+            "Кружка ",
+            "Футболка ",
+            "Рубашка ",
+            "Худи ",
+            "Блокнот ",
+            "Ручка ",
+            "Подарочный набор "
+        ]))
         db.session.add(category)
         db.session.commit()
     for _ in range(30):
-        # title = "".join([chr(randrange(1072, 1103, 1)) for _ in range(30)])
-        # description = "".join([chr(randrange(1072, 1103, 1)) for _ in range(100)])
-        title = "название_товара"
-        description = "описание_товара " * 30
+        # description =
+        title = choice([
+            "Кружка ",
+            "Футболка ",
+            "Рубашка ",
+            "Худи ",
+            "Блокнот ",
+            "Ручка ",
+            "Подарочный набор "
+        ]) + "".join([chr(randrange(1072, 1103, 1)) for _ in range(5)])
+        description = "".join([chr(randrange(1072, 1103, 1)) for _ in range(100)])
 
         item = Item(title, description, "{}", randrange(1, 9999, 1), randrange(1, 9999, 1), randrange(1, 30))
         db.session.add(item)
