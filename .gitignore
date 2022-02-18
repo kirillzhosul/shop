@@ -130,3 +130,5 @@ dmypy.json
 
 .idea
 *.db
+*.db-journal
+src/app/database/database.db-journal
