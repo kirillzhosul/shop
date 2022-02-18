@@ -23,7 +23,9 @@ def register(app: Flask) -> NoReturn:
     from . import developer
     from . import static
     from . import faq
+    from . import legal
 
+    legal.register(app)
     faq.register(app)
     developer.register(app)
     shop.register(app)
