@@ -48,7 +48,9 @@ def debug():
     from random import randrange, choice
     from ...models.discount import Discount
 
-    for _ in range(30):
+    n = 30
+
+    for _ in range(n):
         category = Category(choice([
             "Кружка ",
             "Футболка ",
@@ -60,7 +62,7 @@ def debug():
         ]))
         db.session.add(category)
         db.session.commit()
-    for _ in range(30):
+    for _ in range(n):
         # description =
         title = choice([
             "Кружка ",
