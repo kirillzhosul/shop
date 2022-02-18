@@ -7,6 +7,17 @@
     <script src="{{ url_for('static', filename='js/api.js')}}"></script>
     <script src="{{ url_for('static', filename='js/cart.js')}}"></script>
     <script src="{{ url_for('static', filename='js/favorite.js')}}"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("a[id='reviewsButton']").click(function(){
+                $("#reviewsPopup").modal("show");
+                return false;
+            });
+            if ($(location).attr('hash') == "#reviews"){
+                $("#reviewsPopup").modal("show");
+            }
+        });
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -14,24 +25,67 @@
     <div class="row position-relative mb-5">
         <div class="col-lg mx-auto">
             <h1 class="display-3">{{ item.title }}</h1>
-            <h5><a href="/catalog?cid={{ item.category_id }}" class="link-dark"><i>{{ item.get_category_title() }}</i><br></a></h5>
-
+            <h4>
+                <a href="/catalog?cid={{ item.category_id }}" class="link-dark">
+                    <i>{{ item.get_category_title() }}</i>
+                </a>
+            </h4>
+            <br>
             <img class="card-img-top w-50" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17ed5db9200%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17ed5db9200%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22107.1953125%22%20y%3D%2296.3%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="{{ item.title }}">
 
             {% set price = item.get_price_with_discount() %}
             {% set scores = item.get_scores() %}
             <h4 class="mt-2">{{ price[0] }}₽ {% if price[1] > 0 %}<span class="text-danger">- {{ price[1] }}%</span> {% endif %}</h4>
-            <a href="#reviews">{{ scores[2] }} отзывов </a><br>
+            <a href="#reviews" id="reviewsButton">{{ scores[2] }} отзывов </a>
         </div>
     </div>
     <hr>
     <div class="row">
-        <div class="col-lg mx-auto">
-            <h4 class="mb-5">{{ item.description }}</h4>
+        <div class="col mx-auto">
+            <h4 class="mb-5">{{ item.description|wordwrap(64, true, "<br>") }}</h4>
 
-            <a class="btn btn-secondary btn-lg text-light" onclick="addToFavorites({{ item.id }})">В избранное</a>
-            <a class="btn btn-primary btn-lg text-light" onclick="addToCart({{ item.id }})">В корзину</a>
-            <a class="btn btn-outline-primary btn-lg" href="/catalog">Назад в каталог</a>
+            <a class="btn btn-secondary btn-lg text-light" onclick="addToFavorites({{ item.id }})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                  <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                  <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                </svg>
+                В избранное
+            </a>
+            <a class="btn btn-primary btn-lg text-light" onclick="addToCart({{ item.id }})">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-basket" viewBox="0 0 16 16">
+                  <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                В корзину
+            </a>
+            <a class="btn btn-outline-primary btn-lg" href="/catalog">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-richtext" viewBox="0 0 16 16">
+                  <path d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                  <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+                  <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+                </svg>
+                Назад в каталог
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="reviewsPopup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"  onclick="$('#reviewsPopup').modal('hide')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    Отзывы
+                </h4>
+            </div>
+            <div class="modal-body">
+                Отзывы
+            </div>
+            <div class="modal-footer">
+                <input type="button" id="btnClosePopup" value="Закрыть" class="btn btn-danger" onclick="$('#reviewsPopup').modal('hide')"/>
+            </div>
         </div>
     </div>
 </div>

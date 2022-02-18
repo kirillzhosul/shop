@@ -7,7 +7,11 @@
     <script src="{{ url_for('static', filename='js/api.js')}}"></script>
     <script>
         function topup(){
-            requestApi("balance/topup", "", function (data, status){});
+            requestApi("balance/topup", "", function (data, status){
+                if ("payment_service_url" in data){
+                    var win = window.open(data["payment_service_url"], "_blank", "location=no");
+                }
+            }, true);
         }
     </script>
 {% endblock %}

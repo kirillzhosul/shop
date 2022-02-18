@@ -9,9 +9,12 @@ function handleError(data, status){
     document.getElementById("api-error-message").innerText = data["error"];
 }
 
-function requestApi(method, params, handler){
+function requestApi(method, params, handler, evenOnError=false){
     $.get("/api/" + method + "?" + params, function(data, status){
-        if ("error" in data) return handleError(data, status);
+        if ("error" in data){
+            handleError(data, status);
+            if (!evenOnError) return;
+        }
         return handler(data, status)
     }).fail(function(xhr, status, error){
         return handleError(xhr.responseJSON, status);

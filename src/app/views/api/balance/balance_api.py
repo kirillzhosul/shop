@@ -40,6 +40,6 @@ def topup():
     db.session.commit()
 
     return jsonify({
-        "payment_service_url": "https://localhost/payment_service",
+        "payment_service_url": "",
         "error": "Баланс пополнен на 1250Р и 500БР. Тестовый режим оплаты"
     }), 200
