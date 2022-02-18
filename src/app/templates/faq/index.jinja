@@ -1,10 +1,4 @@
-{% extends 'base_simple.jinja' %}
-
-{% block title %}ЧАВО | Справка{% endblock %}
-
-{% block subname %}
-    <b>Справка</b>
-{% endblock %}
+{% extends 'faq/index.jinja' %}
 
 {% block name %}
     ЧАВО
@@ -13,12 +7,3 @@
 {% block description %}
     Здесь вы можете найти ответы на интересующие вас вопросы по работе сайта!
 {% endblock %}
-
-{% block buttons %}
-    <a class="btn btn-outline-primary btn-lg disabled" href="/faq/orders">Заказы</a>
-    <div class="mt-1">
-        <a class="btn btn-outline-primary btn-lg disabled" href="/faq/balance/real">Баланс</a>
-        <a class="btn btn-outline-primary btn-lg disabled" href="/faq/balance/bonus">Бонусный баланс</a>
-    </div>
-{% endblock %}
-

@@ -1,0 +1,58 @@
+{% extends 'faq/base.jinja' %}
+
+{% block name %}
+    Заказы
+{% endblock %}
+
+{% block description %}
+<p>
+    Каждый заказ имеет за собой статус - <b>требует оплаты</b>, <b>создан</b>, <b>получен</b> и другие. Все статусы заказов с описанием:
+</p>
+
+<div class="row justify-content-center">
+    <h5 class="col-auto">
+      <table class="table table-responsive">
+          <tr>
+              <th>Название</th>
+              <th>Статус</th>
+              <th>Описание</th>
+          </tr>
+          <tr>
+            <td>AWAITING_PAYMENT</td>
+              <td>Ожидает оплаты</td>
+              <td>Вы создали заказ, и теперь вам требуется оплатить его, списав деньги с баланса</td>
+          </tr>
+          <tr>
+            <td>CREATED</td>
+              <td>Создан</td>
+              <td>Заказ создан, сборщик скоро начнёт работу над ним</td>
+          </tr>
+          <tr>
+            <td>IN_PROGRESS</td>
+              <td>В работе</td>
+              <td>Заказ в сборке и скоро будет готов к отправке</td>
+          </tr>
+          <tr>
+            <td>SENT</td>
+              <td>Отправлен</td>
+              <td>Заказ отправлен сервисом доставки</td>
+          </tr>
+          <tr>
+            <td>DELIVERED</td>
+              <td>Доставлен</td>
+              <td>Заказ доставлен по адресу указанному в заказе</td>
+          </tr>
+          <tr>
+            <td>RECEIVED</td>
+              <td>Получен</td>
+              <td>Вы получили заказ</td>
+          </tr>
+          <tr>
+            <td>CANCELLED</td>
+              <td>Отменён</td>
+              <td>Вы отменили заказ, не забрали его, или что то отличное</td>
+          </tr>
+      </table>
+    </h5>
+</div>
+{% endblock %}
