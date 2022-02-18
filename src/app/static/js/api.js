@@ -4,6 +4,8 @@ function handleError(data, status){
     if ("redirect_to" in data){
         window.location = data["redirect_to"];
     }
+
+    document.getElementById("api-error-message").innerText = data["error"];
 }
 
 function requestApi(method, params, handler){

@@ -11,7 +11,7 @@ from ....models.user.user import User
 from .... import db
 
 
-bp_api_auth = Blueprint("bp_api_auth", __name__)
+bp_api_auth = Blueprint("api_auth", __name__)
 
 
 @bp_api_auth.route("/api/auth/login", methods=["GET"])
@@ -29,7 +29,7 @@ def login():
 
     if len(email) == 0 or len(password) == 0:
         return jsonify({
-            "error": "Заполните поле `email` и `password` в запросе!"
+            "error": "Заполните все поля!"
         }), 400
 
     if not (user := User.query.filter_by(email=email).first()):

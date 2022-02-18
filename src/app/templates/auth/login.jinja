@@ -1,0 +1,52 @@
+{% extends 'base_simple.jinja' %}
+
+{% block title %}Войти в существующий аккаунт{% endblock %}
+
+{% block include %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/api.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js')}}"></script>
+
+    <script>
+        function login(){
+            var password = document.getElementById("email").value;
+            var email = document.getElementById("email").value;
+
+            if (email.length == 0) {
+                document.getElementById("api-error-message").innerText = "Введите почту!";
+                return;
+            }
+
+            if (password.length == 0) {
+                document.getElementById("api-error-message").innerText = "Введите пароль!";
+                return;
+            }
+
+            authLogin(email, password);
+        }
+    </script>
+{% endblock %}
+
+{% block subname %}
+    Авторизация
+{% endblock %}
+
+{% block name %}
+    <div class="display-3">
+        Войти в существующий аккаунт
+    </div>
+{% endblock %}
+
+{% block description %}
+    <div class="text-danger" id="api-error-message"></div>
+
+    <input type="email" id="email" class="form-control-lg" placeholder="Почта">
+    <input type="password" id="password" class="form-control-lg mt-1" placeholder="Пароль"><br>
+    <span class="btn btn-primary btn-lg" onclick="login()">Войти</span>
+{% endblock %}
+
+{% block buttons %}
+    <a class="btn btn-outline-primary btn-lg" href="/legal/privacy">Политика конфиденциальности</a>
+    <a class="btn btn-outline-primary btn-lg" href="/legal/agreement">Пользовательское соглашение</a>
+{% endblock %}
+
