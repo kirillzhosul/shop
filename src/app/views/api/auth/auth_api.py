@@ -37,7 +37,10 @@ def login():
             "error": "Данные для входа не верны!"
         }), 400
 
-    # Password check here TODO.
+    if not user.verify_password(password):
+        return jsonify({
+            "error": "Данные для входа не верны!"
+        }), 400
 
     login_user(user, remember=True,
                force=False, fresh=True)
@@ -83,7 +86,12 @@ def register():
     if password != password_confirmation:
         return jsonify({"error": "Пароль и подтверждение пароля не совпадает!"}), 400
 
-    user = User(email, name, phone)
+    if User.query.filter_by(email=email).first():
+        return jsonify({
+            "error": "Пользователь с данной электронной почтой уже зарегистрирован!"
+        }), 400
+
+    user = User(email, name, password, phone if phone else None)
     db.session.add(user)
     db.session.commit()
 

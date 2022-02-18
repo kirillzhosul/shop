@@ -8,6 +8,7 @@ import datetime
 from typing import Optional
 from ... import db
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model, UserMixin):
@@ -19,6 +20,8 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(15), nullable=True)
+
+    password = db.Column(db.String(80))
 
     balance_real = db.Column(db.Integer, default=0, nullable=False)
     balance_bonus = db.Column(db.Integer, default=0, nullable=False)
@@ -32,12 +35,17 @@ class User(db.Model, UserMixin):
 
     date_created = db.Column(db.DateTime(timezone=False), nullable=False)
 
-    def __init__(self, email: str, name: str, phone: Optional[str] = None):
+    def __init__(self, email: str, name: str, password: str, phone: Optional[str] = None):
         self.name = name
         self.email = email
         self.phone = phone
 
+        self.password = generate_password_hash(password)
+
         self.date_created = datetime.datetime.now()
+
+    def verify_password(self, password):
+        return check_password_hash(self.password, password)
 
     def get_counters(self):
         counter_orders = len(self.orders)
