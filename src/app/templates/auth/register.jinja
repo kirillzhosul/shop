@@ -1,6 +1,6 @@
 {% extends 'base_simple.jinja' %}
 
-{% block title %}Вход{% endblock %}
+{% block title %}Зарегистрировать новый аккаунт{% endblock %}
 
 {% block include %}
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -8,14 +8,21 @@
     <script src="{{ url_for('static', filename='js/auth.js')}}"></script>
 
     <script>
-        function login(){
+        function register(){
             var password = document.getElementById("password").value;
+            var password_confirmation = document.getElementById("password_confirmation").value;
+
+            var name = document.getElementById("name").value;
+            var phone = document.getElementById("phone").value;
             var email = document.getElementById("email").value;
 
             if (email.length == 0) return document.getElementById("api-error-message").innerText = "Введите почту!";
             if (password.length == 0) return document.getElementById("api-error-message").innerText = "Введите пароль!";
+            if (password_confirmation.length == 0) return document.getElementById("api-error-message").innerText = "Введите подтверждение пароля!";
+            if (name.length == 0) return document.getElementById("api-error-message").innerText = "Введите имя!";
+            if (phone.length == 0) return document.getElementById("api-error-message").innerText = "Введите телефон!";
 
-            authLogin(email, password);
+            authRegister(name, phone, email, password, password_confirmation);
         }
     </script>
 {% endblock %}
@@ -26,16 +33,19 @@
 
 {% block name %}
     <div class="display-3">
-        Войти в существующий аккаунт
+        Регистрация
     </div>
 {% endblock %}
 
 {% block description %}
     <div class="text-danger" id="api-error-message"></div>
-
+    <input type="text" id="name" class="form-control-lg" placeholder="ФИО"><br>
     <input type="email" id="email" class="form-control-lg" placeholder="Почта">
-    <input type="password" id="password" class="form-control-lg mt-1" placeholder="Пароль"><br>
-    <span class="btn btn-primary btn-lg" onclick="login()">Войти</span>
+    <input type="text" id="phone" class="form-control-lg" placeholder="Телефон"><br>
+
+    <input type="password" id="password" class="form-control-lg" placeholder="Пароль">
+    <input type="password" id="password_confirmation" class="form-control-lg" placeholder="Подтверждение пароля"><br>
+    <span class="btn btn-primary btn-lg" onclick="register()">Зарегистрироваться</span>
 {% endblock %}
 
 {% block buttons %}
