@@ -1,4 +1,5 @@
 function handleError(data, status){
+    if (data === undefined) return;
     if (!("error" in data)) return;
 
     if ("redirect_to" in data){

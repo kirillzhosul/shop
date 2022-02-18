@@ -2,11 +2,22 @@
 
 {% block title %}Личный кабинет{% endblock %}
 
+{% block include %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/api.js')}}"></script>
+    <script>
+        function topup(){
+            requestApi("balance/topup", "", function (data, status){});
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
 <div class="container text-center py-5 ">
     <div class="row position-relative mb-5">
         <div class="col-lg mx-auto">
             <h1 class="display-3">Личный кабинет клиента</h1>
+            <div class="text-danger" id="api-error-message"></div>
         </div>
     </div>
     <hr>
@@ -23,6 +34,10 @@
             <span class="btn btn-outline-secondary btn-lg disabled mt-1">Бонусный баланс
                 <span class="badge badge-light">{{ user.balance_bonus }}₽</span>
                 <a class="badge badge-light" href="/faq/balance/bonus">?</a>
+            </span>
+            <br>
+            <span class="btn btn-outline-success btn-lg mt-1" onclick="topup()">
+                Пополнить...
             </span>
         </div>
 

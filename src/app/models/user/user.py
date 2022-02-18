@@ -47,6 +47,24 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password, password)
 
+    def get_balance(self):
+        return self.balance_real + self.balance_bonus
+
+    def pay(self, price: int):
+        if price > self.balance_bonus:
+            price -= self.balance_bonus
+            self.balance_bonus = 0
+        else:
+            self.balance_bonus -= price
+            return
+
+        if price > self.balance_real:
+            price -= self.balance_real
+            self.balance_real = 0
+        else:
+            self.balance_real -= price
+            return
+
     def get_counters(self):
         counter_orders = len(self.orders)
         counter_cart = (
