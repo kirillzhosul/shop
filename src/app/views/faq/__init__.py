@@ -13,5 +13,6 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import faq
-    app.register_blueprint(faq.bp_faq)
+    with app.app_context():
+        from . import faq
+        app.register_blueprint(faq.bp_faq)

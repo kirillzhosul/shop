@@ -20,7 +20,7 @@ class Config:
     FLASK_SECRET_KEY = SECRET_KEY
     JSON_AS_ASCII = False
 
-    # Debug.s
+    # Debug.
     DEBUG = False
 
     # Database.
