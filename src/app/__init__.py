@@ -1,15 +1,25 @@
 #!env/bin/python
+# Refactoring by SantaSpeen
+# 23.02.2022
 """
     Merchandise shop application.
     Provides full application via 'create()' that returns ready to be runned application.
 """
 
 from os.path import exists as path_exists
+from typing import Type, NoReturn
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 from .config import *
+from . import (
+    views,                  # Init views
+    error_handlers,         # Init error handlers
+    models                  # SQLAlchemy models
+)
+
 
 __author__ = "Kirill Zhosul"
 __copyright = "(c) 2022 Kirill Zhosul"
@@ -20,7 +30,7 @@ db: SQLAlchemy = SQLAlchemy()
 lm: LoginManager = LoginManager()
 
 
-def login_manager_init_app(app: Flask):
+def login_manager_init_app(app: Flask) -> NoReturn:
     """
     Initialises login manager.
     :param app: Flask application.
@@ -42,11 +52,11 @@ def login_manager_init_app(app: Flask):
 
         try:
             return User.query.get(int(uid))
-        except Exception:
+        except Exception as e:
             return None
 
 
-def create(name=None, cfg: object = ConfigProduction) -> Flask:
+def create(name: str = None, cfg: Type[ConfigProduction] or Type[ConfigDevelopment] = ConfigProduction) -> Flask:
     """
     Returns ready to be runned application.
     :param: name Flask import_name, preferred to be omitted.
@@ -59,17 +69,14 @@ def create(name=None, cfg: object = ConfigProduction) -> Flask:
     app.url_map.strict_slashes = False
 
     # Database.
-    from . import models
     db.init_app(app)
     if not path_exists(app.config.get("SQLALCHEMY_DATABASE_FILEPATH")):
         db.create_all(app=app)
 
-    # Views.
-    from . import views
+    # Register views.
     views.register(app)
 
-    # Error handlers.
-    from . import error_handlers
+    # Register error handlers.
     error_handlers.register(app)
 
     # Login manager.
