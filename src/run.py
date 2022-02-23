@@ -7,10 +7,8 @@
 import app
 
 # Settings.
-HOST = "0.0.0.0"
-PORT = 80
 CONFIG = app.config.ConfigDevelopment
 
 if __name__ == "__main__":
     wsgi_app = app.create(None, CONFIG)
-    wsgi_app.run(host=HOST, port=PORT)
+    wsgi_app.run(host=CONFIG.HOST, port=CONFIG.PORT)
