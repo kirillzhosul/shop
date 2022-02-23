@@ -8,3 +8,4 @@ Jinja2==3.0.3
 MarkupSafe==2.0.1
 SQLAlchemy==1.4.31
 Werkzeug==2.0.2
+flask-login==0.5.0
