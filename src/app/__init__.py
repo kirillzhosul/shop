@@ -7,7 +7,7 @@
 """
 
 from os.path import exists as path_exists
-from typing import NoReturn, Type
+from typing import NoReturn, Type, Optional
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -25,7 +25,10 @@ __copyright = "(c) 2022 Kirill Zhosul"
 __license__ = "MIT"
 
 
-db: SQLAlchemy = SQLAlchemy()
+# Database global object,
+# referenced in business (database) logic,
+# and also in database model classes.
+db = SQLAlchemy()
 
 
 def login_manager_init_app(app: Flask) -> NoReturn:
@@ -33,6 +36,9 @@ def login_manager_init_app(app: Flask) -> NoReturn:
     Initialises login manager.
     :param app: Flask application.
     """
+
+    # Should be here, as uses database model (db),
+    # used in user loader.
     from .models.user.user import User  # pylint: disable=import-outside-toplevel, unused-import
 
     lm = LoginManager()
@@ -49,7 +55,12 @@ def login_manager_init_app(app: Flask) -> NoReturn:
     )
 
     @lm.user_loader
-    def user_loader(uid):
+    def user_loader(uid: int) -> Optional[User]:
+        """
+        Flask login user loader, should return user object or none.
+        :param uid: User index for database query.
+        :return: User or none.
+        """
         return User.query.get(int(uid))
 
 
@@ -61,27 +72,25 @@ def create(name: str = None, cfg: Type[Config] = ConfigProduction) -> Flask:
     """
 
     app = Flask(name if name else __name__)
+    app.url_map.strict_slashes = False
 
     # Config.
     app.config.from_object(cfg)
     app.url_map.strict_slashes = False
 
+    # Register views and error handlers.
+    views.register(app)
+    error_handlers.register(app)
+
     # Database.
-    from . import models  # Flask SQLAlchemy database models.
+
+    # That import is used, because db.init_app and db.create_all references all database models.
+    from . import models  # pylint: disable=import-outside-toplevel, unused-import
     db.init_app(app)
     if not path_exists(app.config.get("SQLALCHEMY_DATABASE_FILEPATH")):
         db.create_all(app=app)
 
-    # Register views.
-    views.register(app)
-
-    # Register error handlers.
-    error_handlers.register(app)
-
     # Login manager.
     login_manager_init_app(app)
-
-    # String slashes.
-    app.url_map.strict_slashes = False
 
     return app

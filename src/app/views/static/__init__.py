@@ -6,6 +6,8 @@
 from typing import NoReturn
 from flask import Flask
 
+from .static import bp_static
+
 
 def register(app: Flask) -> NoReturn:
     """
@@ -13,7 +15,5 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-
-    from .static import bp_static
     app.register_blueprint(bp_static)
 

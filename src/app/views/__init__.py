@@ -13,23 +13,24 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import root
+
+    # Importing lower (next) level views.
+    # Should be here as references some things.
+    from . import (
+        shop,  # Catalog etc.
+        auth, profile,  # Accounts.
+        api,  # API.
+        developer, faq,  # Developer.
+        static, legal, root  # Other and static.
+    )  # pylint: disable=import-outside-toplevel, unused-import
+
+    # Blueprints.
     app.register_blueprint(root.bp_root)
 
-    from . import shop
-    from . import auth
-    from . import profile
-    from . import api
-    from . import developer
-    from . import static
-    from . import faq
-    from . import legal
-
-    legal.register(app)
-    faq.register(app)
-    developer.register(app)
-    shop.register(app)
-    auth.register(app)
-    profile.register(app)
-    api.register(app)
-    static.register(app)
+    # Passing to next register functions.
+    view_modules = (
+        shop, auth, profile, api,
+        faq, static, legal, developer
+    )
+    for module in view_modules:
+        module.register(app)

@@ -23,5 +23,6 @@ def run_server() -> NoReturn:
     wsgi_app.run(host=CONFIG.HOST, port=CONFIG.PORT)
 
 
+# Entry point.
 if __name__ == "__main__":
     run_server()

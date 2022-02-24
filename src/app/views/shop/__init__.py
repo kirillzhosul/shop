@@ -6,6 +6,10 @@
 from typing import NoReturn
 from flask import Flask
 
+from . import (
+    catalog, item
+)
+
 
 def register(app: Flask) -> NoReturn:
     """
@@ -13,7 +17,5 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import catalog
-    from . import item
     app.register_blueprint(catalog.bp_catalog)
     app.register_blueprint(item.bp_item)

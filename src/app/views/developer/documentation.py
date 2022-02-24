@@ -6,7 +6,7 @@
 from flask import Blueprint, url_for, render_template, redirect
 from flask_login import current_user
 
-from ...services import templates_get_name_list
+from ...services.templates import templates_get_name_list
 from ...error_handlers.raise_error import raise_error
 
 

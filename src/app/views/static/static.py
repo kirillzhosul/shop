@@ -5,7 +5,7 @@
 
 from flask import Blueprint, send_from_directory, current_app
 
-bp_static = Blueprint("static_", __name__)
+bp_static = Blueprint("ext_static", __name__)
 
 
 @bp_static.route("/robots.txt")
