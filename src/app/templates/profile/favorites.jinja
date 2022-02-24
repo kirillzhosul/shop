@@ -23,7 +23,7 @@
             {% if favorites_count > 0 %}
                 <h4>Всего {{ favorites_count }} избранных товаров</h4>
                 <div class="mt-4">
-                    <a class="btn btn-primary text-light btn-lg" href="/catalog">В каталог</a>
+                    <a class="btn btn-primary text-light btn-lg" href="{{ url_for('catalog.index') }}">В каталог</a>
                 </div>
             {% endif %}
             <hr>
@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="card-header">
                             <img class="card-img-top" src="https://picsum.photos/200?{{favorite_item.id}}" alt="{{ favorite_item.item.title }}">
-                            <h3><a href="/item?id={{ favorite_item.item.id }}" class="link-dark">{{ favorite_item.item.title|truncate(16, True) }}</a></h3>
+                            <h3><a href="{{ url_for('item.index') }}?id={{ favorite_item.item.id }}" class="link-dark">{{ favorite_item.item.title|truncate(16, True) }}</a></h3>
                             <h4 class="mt-2">
                                 <b>{{ price[0] }}</b>₽
                                 {% if price[1] > 0 %}
@@ -60,7 +60,7 @@
         </div>
     {% else %}
         <h1 class="text-warning">У вас нет избранных товаров!</h1>
-         <a class="btn btn-primary text-light btn-lg" href="/catalog">
+         <a class="btn btn-primary text-light btn-lg" href="{{ url_for('catalog.index') }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>

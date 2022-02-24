@@ -24,18 +24,18 @@
             <h4>
                 {% if query %}
                     {% if category %}
-                        По запросу <b>{{ query }}</b> в категории <a href="/catalog?cid={{ category.id }}">{{ category.title }}</a> найдено {{ count }} товаров.
+                        По запросу <b>{{ query }}</b> в категории <a href="{{ url_for('catalog.index') }}?cid={{ category.id }}">{{ category.title }}</a> найдено {{ count }} товаров.
                     {% else %}
                         По запросу <b>{{ query }}</b> найдено {{ count }} товаров.
                     {% endif %}
                 {% else %}
                     {% if category %}
-                        В категории <a href="/catalog?cid={{ category.id }}">{{ category.title }}</a> найдено {{ count }} товаров.
+                        В категории <a href="{{ url_for('catalog.index') }}?cid={{ category.id }}">{{ category.title }}</a> найдено {{ count }} товаров.
                     {% endif %}
                 {% endif %}
             </h4>
-            <a class="btn btn-outline-primary" href="/categories">Категории товаров</a>
-            {% if query or categor%} <a class="btn btn-outline-secondary" href="/catalog">Очистить фильтры</a> {% endif %}
+            <a class="btn btn-outline-primary" href="{{ url_for('catalog.categories') }}">Категории товаров</a>
+            {% if query or categor%} <a class="btn btn-outline-secondary" href="{{ url_for('catalog.index') }}">Очистить фильтры</a> {% endif %}
         </div>
     </div>
 </div>
@@ -50,7 +50,7 @@
                 <div class="card">
                     <div class="card-header">
                         <img class="card-img-top" src="https://picsum.photos/200?{{item.id}}" alt="{{ item.title }}">
-                        <h3 class="card-title"><a href="/item?id={{ item.id }}" class="text-info">
+                        <h3 class="card-title"><a href="{{ url_for('item.index') }}?id={{ item.id }}" class="text-info">
                             {{ item.title|truncate(16, True) }}
                         </a></h3>
 
@@ -64,13 +64,13 @@
                                 {% endif %}
                             </h4>
                             <br>
-                            <a href="/catalog?cid={{ item.category_id }}"><i>{{ item.get_category_title() }}</i><br></a>
-                            <a href="/item?id={{ item.id}}#reviews">{{ scores[2] }} отзывов</a>
+                            <a href="{{ url_for('catalog.index') }}?cid={{ item.category_id }}"><i>{{ item.get_category_title() }}</i><br></a>
+                            <a href="{{ url_for('item.index') }}?id={{ item.id}}#reviews">{{ scores[2] }} отзывов</a>
                         </div>
                         </div>
                     <div class="card-body">
                         <p>
-                            <a class="card-text text-muted mb-3" href="/item?id={{ item.id }}">
+                            <a class="card-text text-muted mb-3" href="{{ url_for('item.index') }}?id={{ item.id }}">
                                     {{ item.description|truncate(128, True) }} <!-- |wordwrap(16, true, "<br>") -->
                             </a>
                         </p>

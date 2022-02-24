@@ -20,13 +20,13 @@
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg" href="/catalog">Каталог</a>
-    <a class="btn btn-outline-primary btn-lg" href="/categories">Категории товаров</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('catalog.index') }}">Каталог</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('catalog.categories') }}">Категории товаров</a>
     <div class="mt-1">
-        <a class="btn btn-outline-secondary btn-lg" href="/about">О нас</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/contacts">Контакты</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/faq">ЧАВО</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/dev">Разработчикам</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('root.about') }}">О нас</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('root.contacts') }}">Контакты</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('faq.index') }}">ЧАВО</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('dev_docs.index') }}">Разработчикам</a>
     </div>
 {% endblock %}
 

@@ -18,16 +18,16 @@
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg" href="/dev/rules"><b>Правила</b></a>
-    <a class="btn btn-outline-success btn-lg" href="/health/api"><b>Статус API</b></a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('dev_docs.page', name='rules') }}"><b>Правила</b></a>
+    <a class="btn btn-outline-success btn-lg" href="{{ url_for('api_health.index') }}"><b>Статус API</b></a>
     <div class="mt-1">
-        <a class="btn btn-outline-primary btn-lg disabled" href="/dev/guide">Гид по <b>API</b></a>
-        <a class="btn btn-outline-primary btn-lg" href="/dev/methods"><i>Методы</i> <b>API</b></a>
+        <a class="btn btn-outline-primary btn-lg disabled" href="{{ url_for('dev_docs.page', name='guide') }}">Гид по <b>API</b></a>
+        <a class="btn btn-outline-primary btn-lg" href="{{ url_for('dev_docs.page', name='methods') }}"><i>Методы</i> <b>API</b></a>
     </div>
     <div class="mt-1">
-        <a class="btn btn-outline-secondary btn-lg disabled" href="/dev/response">Формат ответов <b>API</b></a>
-        <a class="btn btn-outline-secondary btn-lg disabled" href="/dev/widgets">Виджеты на ваш сайт</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/dev/clients">Разработка сторонних клиентов</a>
+        <a class="btn btn-outline-secondary btn-lg disabled" href="{{ url_for('dev_docs.page', name='response') }}">Формат ответов <b>API</b></a>
+        <a class="btn btn-outline-secondary btn-lg disabled" href="{{ url_for('dev_docs.page', name='widgets') }}">Виджеты на ваш сайт</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('dev_docs.page', name='clients') }}">Разработка сторонних клиентов</a>
     </div>
 {% endblock %}
 

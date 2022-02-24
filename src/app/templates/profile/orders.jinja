@@ -17,8 +17,8 @@
                 </svg>
                 Заказы
             </h1>
-            <a class="btn btn-primary text-light btn-lg" href="/catalog">В каталог</a>
-            <a class="btn btn-primary text-light btn-lg" href="/faq/orders">Помощь</a>
+            <a class="btn btn-primary text-light btn-lg" href="{{ url_for('catalog.index') }}">В каталог</a>
+            <a class="btn btn-primary text-light btn-lg" href="{{ url_for('faq.page', name='orders') }}">Помощь</a>
         </div>
     </div>
     <hr>
@@ -58,7 +58,7 @@
 
                     <div class="card-body">
                         {% for order_item in order.items %}
-                           <a class="btn btn-outline-primary text-dark mb-1" href="/item?id={{ order_item.item_id }}">
+                           <a class="btn btn-outline-primary text-dark mb-1" href="{{ url_for('item.index') }}?id={{ order_item.item_id }}">
                                 {{ order_item.item.title|truncate(16, True) }}
                                 <b>{{ order_item.price }}₽</b> x <b>{{ order_item.quantity }}</b><br>
                            </a>

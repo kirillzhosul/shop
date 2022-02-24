@@ -15,9 +15,9 @@
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg disabled" href="/faq/orders">Заказы</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('faq.page', name='orders') }}">Заказы</a>
     <div class="mt-1">
-        <a class="btn btn-outline-primary btn-lg disabled" href="/faq/balance/real">Баланс</a>
-        <a class="btn btn-outline-primary btn-lg disabled" href="/faq/balance/bonus">Бонусный баланс</a>
+        <a class="btn btn-outline-primary btn-lg disabled" href="{{ url_for('faq.page', name='balance/real') }}">Баланс</a>
+        <a class="btn btn-outline-primary btn-lg disabled" href="{{ url_for('faq.page', name='balance/bonus') }}">Бонусный баланс</a>
     </div>
 {% endblock %}

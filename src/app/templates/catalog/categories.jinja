@@ -7,7 +7,7 @@
     <div class="row position-relative">
         <div class="col-lg mx-auto">
             <h1 class="display-4">Категории товаров</h1>
-            <a class="btn btn-primary text-light" href="/catalog">В каталог</a>
+            <a class="btn btn-primary text-light" href="{{ url_for('catalog.index') }}">В каталог</a>
         </div>
     </div>
 </div>
@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <img class="card-img-top" src="https://picsum.photos/200?{{category.id}}" alt="{{ category.title }}">
                         <h3 class="card-title">{{ category.title|truncate(16, True) }}</h3>
-                        <a class="btn btn-primary text-light" href="/catalog?cid={{ category.id }}">Открыть каталог</a>
+                        <a class="btn btn-primary text-light" href="{{ url_for('catalog.index') }}?cid={{ category.id }}">Открыть каталог</a>
                     </div>
                 </div>
             </div>

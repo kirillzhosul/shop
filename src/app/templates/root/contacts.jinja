@@ -23,22 +23,22 @@
     </div>
     <div class="row">
         <div class="col">
-            <a class="btn btn-outline-primary btn-lg" href="/legal/privacy">Политика конфиденциальности</a>
+            <a class="btn btn-outline-primary btn-lg" href="{{ url_for('legal.privacy') }}">Политика конфиденциальности</a>
         </div>
         <div class="col">
-            <a class="btn btn-outline-primary btn-lg" href="/legal/agreement">Пользовательское соглашение</a>
+            <a class="btn btn-outline-primary btn-lg" href="{{ url_for('legal.agrement') }}">Пользовательское соглашение</a>
         </div>
     </div>
 
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg" href="/">Главная</a>
-    <a class="btn btn-outline-primary btn-lg" href="/catalog">Каталог</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('root.index') }}">Главная</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('catalog.index') }}">Каталог</a>
     <div class="mt-1">
-        <a class="btn btn-outline-secondary btn-lg" href="/about">О нас</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/faq">ЧАВО</a>
-        <a class="btn btn-outline-secondary btn-lg" href="/dev">Разработчикам</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('root.about') }}">О нас</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('faq.index') }}">ЧАВО</a>
+        <a class="btn btn-outline-secondary btn-lg" href="{{ url_for('dev_docs.index') }}">Разработчикам</a>
     </div>
 {% endblock %}
 

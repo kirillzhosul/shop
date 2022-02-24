@@ -32,12 +32,12 @@
 
             <span class="btn btn-outline-secondary btn-lg disabled">Реальный баланс
                 <span class="badge badge-light">{{ user.balance_real }}₽</span>
-                <a class="badge badge-light" href="/faq/balance/real">?</a>
+                <a class="badge badge-light" href="{{ url_for('faq.page', name='balance/real') }}">?</a>
             </span>
             <br>
             <span class="btn btn-outline-secondary btn-lg disabled mt-1">Бонусный баланс
                 <span class="badge badge-light">{{ user.balance_bonus }}₽</span>
-                <a class="badge badge-light" href="/faq/balance/bonus">?</a>
+                <a class="badge badge-light" href="{{ url_for('faq.page', name='balance/bonus') }}">?</a>
             </span>
             <br>
             <span class="btn btn-outline-success btn-lg mt-1" onclick="topup()">
@@ -49,11 +49,11 @@
             <span class="btn btn-primary btn-lg disabled mb-1">Навигация</span>
             <br>
 
-            <a class="btn btn-outline-primary btn-lg mb-1" href="/orders">Ваши заказы</a>
-            <a class="btn btn-outline-primary btn-lg mb-1" href="/cart">Ваша корзина</a><br>
-            <a class="btn btn-outline-primary btn-lg mb-1" href="/favorites">Ваши избранные товары</a><br><br>
-            <a class="btn btn-outline-primary btn-lg mb-1" href="/catalog">Каталог</a>
-            <a class="btn btn-outline-primary btn-lg mb-1" href="/faq">ЧАВО</a><br>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="{{ url_for('profile.orders') }}">Ваши заказы</a>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="{{ url_for('profile.cart') }}">Ваша корзина</a><br>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="{{ url_for('profile.favorites') }}">Ваши избранные товары</a><br><br>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="{{ url_for('catalog.index') }}">Каталог</a>
+            <a class="btn btn-outline-primary btn-lg mb-1" href="{{ url_for('faq.index') }}">ЧАВО</a><br>
         </div>
 
         <div class="col mx-auto">
@@ -68,7 +68,7 @@
 
     </div>
     <div class="mt-5">
-        <a class="btn btn-danger btn-lg mb-1" href="/auth/logout">Выйти</a>
+        <a class="btn btn-danger btn-lg mb-1" href="{{ url_for('auth.logout') }}">Выйти</a>
     </div>
 
 </div>
