@@ -5,7 +5,9 @@
 """
 
 from flask import redirect, url_for, render_template, Response
-from flask_login import current_user
+from flask_login import current_user, login_user
+
+from ..models.user.user import User
 
 
 def render_or_profile_if_not_guest(template_name: str) -> Response:
@@ -18,3 +20,14 @@ def render_or_profile_if_not_guest(template_name: str) -> Response:
     if current_user.is_authenticated:
         return redirect(url_for("profile.index"))
     return Response(render_template(template_name, user=current_user))
+
+
+def try_login_user(email: str, password: str, remember: bool) -> bool:
+    user = User.query.filter_by(email=email).first()
+
+    if not user or not user.verify_password(password):
+        return False
+
+    login_user(user, remember=remember, force=False, fresh=True)
+
+    return True
