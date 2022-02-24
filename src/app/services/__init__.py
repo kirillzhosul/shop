@@ -6,3 +6,4 @@
 
 from . import auth
 from . import templates
+from . import api
