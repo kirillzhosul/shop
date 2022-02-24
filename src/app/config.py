@@ -1,7 +1,7 @@
 #!usr/bin/python
 """
     Config files for app configuration.
-    Contains several classes for the
+    Contains several classes for the app.
 """
 
 import os

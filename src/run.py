@@ -6,11 +6,22 @@
     Runs the Flask application.
 """
 
+from typing import NoReturn
+
 import app
+
 
 # Settings.
 CONFIG = app.config.ConfigDevelopment
 
-if __name__ == "__main__":
+
+def run_server() -> NoReturn:
+    """
+    Creates app and runs app with werkzeug server.
+    """
     wsgi_app = app.create(cfg=CONFIG)
     wsgi_app.run(host=CONFIG.HOST, port=CONFIG.PORT)
+
+
+if __name__ == "__main__":
+    run_server()
