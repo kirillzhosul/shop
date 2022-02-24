@@ -6,12 +6,12 @@
 from typing import NoReturn
 from flask import Flask
 
+from . import profile
+
 
 def register(app: Flask) -> NoReturn:
     """
     Registers all views blueprints.
-    :param: app Flask application.
-    :return:
+    :param app: Flask application.
     """
-    from . import profile
     app.register_blueprint(profile.bp_profile)

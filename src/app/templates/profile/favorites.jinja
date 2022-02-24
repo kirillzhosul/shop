@@ -9,6 +9,8 @@
     <script src="{{ url_for('static', filename='js/cart.js')}}"></script>
 {% endblock %}
 
+{% set favorites_count = user.favorite_items|length %}
+
 {% block body %}
 <div class="container text-center py-5 ">
     <div class="row position-relative">

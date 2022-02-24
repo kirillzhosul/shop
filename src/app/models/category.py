@@ -23,7 +23,7 @@ class Category(db.Model):
         self.title = title
 
     @staticmethod
-    def get_category_by_id(category_id: int) -> Optional["Category"]:
+    def get_by_id(category_id: int) -> Optional["Category"]:
         """
         Returns category with that ID or None if was not found.
         :param category_id:

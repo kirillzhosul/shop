@@ -103,7 +103,7 @@ class Item(db.Model):
         return db_items, db_count
 
     @staticmethod
-    def get_by_id(item_id) -> Union["Item", None]:
+    def get_by_id(item_id: int) -> Union["Item", None]:
         """
         Returns item or None if not found.
         :param item_id: ID of the item.
@@ -113,3 +113,12 @@ class Item(db.Model):
             return None
 
         return Item.query.filter_by(id=item_id).first() or None
+
+    @staticmethod
+    def get_by_id_or_404(item_id: int) -> "Item":
+        """
+        Returns item or raises 404 if not found.
+        :param item_id: ID of the item.
+        :return: Item object.
+        """
+        return Item.query.filter_by(id=item_id).first_or_404()

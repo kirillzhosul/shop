@@ -3,40 +3,35 @@
     Merchandise shop application auth views.
 """
 
-from flask import Blueprint, redirect, url_for, render_template
-from flask_login import logout_user, login_required, current_user
+from flask import Blueprint, redirect, url_for
+from flask_login import logout_user
+
+from ...services.auth import render_or_profile_if_not_guest
+
 
 bp_auth = Blueprint("auth", __name__)
 
 
 @bp_auth.route("/auth/", methods=["GET"])
 def index():
-    if current_user.is_authenticated:
-        return redirect(url_for("profile.index"))
-    return render_template("auth/index.jinja", user=current_user)
+    """Auth index page."""
+    return render_or_profile_if_not_guest("auth/index.jinja")
 
 
 @bp_auth.route("/auth/login", methods=["GET"])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for("profile.index"))
-    return render_template("auth/login.jinja", user=current_user)
+    """Auth login page. """
+    return render_or_profile_if_not_guest("auth/login.jinja")
 
 
 @bp_auth.route("/auth/register", methods=["GET"])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for("profile.index"))
-    return render_template("auth/register.jinja", user=current_user)
-
-
-@bp_auth.route("/auth/recovery", methods=["GET"])
-def recovery():
-    return redirect(url_for("auth.index"))
+    """Auth register page. """
+    return render_or_profile_if_not_guest("auth/register.jinja")
 
 
 @bp_auth.route("/auth/logout", methods=["GET"])
-@login_required
 def logout():
+    """Logout page. Will log out the user and redirect to auth page. """
     logout_user()
     return redirect(url_for("auth.index"))

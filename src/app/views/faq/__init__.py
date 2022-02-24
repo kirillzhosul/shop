@@ -4,7 +4,10 @@
 """
 
 from typing import NoReturn
+
 from flask import Flask
+
+from . import faq
 
 
 def register(app: Flask) -> NoReturn:
@@ -13,6 +16,4 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    with app.app_context():
-        from . import faq
-        app.register_blueprint(faq.bp_faq)
+    app.register_blueprint(faq.bp_faq)

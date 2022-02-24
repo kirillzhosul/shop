@@ -8,6 +8,8 @@
     <script src="{{ url_for('static', filename='js/cart.js')}}"></script>
 {% endblock %}
 
+{% set cart_price, cart_count = current_user.get_cart() %}
+
 {% block body %}
 <div class="container text-center py-5 ">
     <div class="row position-relative">

@@ -13,11 +13,12 @@ bp_item = Blueprint("item", __name__)
 
 
 @bp_item.route("/item", methods=["GET"])
-def index():
-    args_id = request.args.get("id", type=int, default=0)
-
-    db_item = Item.query.filter_by(id=args_id).first_or_404()
+def index() -> str:
+    """
+    Item view page. Displays item page, or raises 404 if item not found.
+    """
+    item_id = request.args.get("id", type=int, default=0)
+    item = Item.get_by_id_or_404(item_id)
 
     return render_template("catalog/item.jinja",
-                           item=db_item,
-                           user=current_user)
+                           item=item, user=current_user)

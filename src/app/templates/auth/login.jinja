@@ -36,7 +36,7 @@
     <input type="email" id="email" class="form-control-lg" placeholder="Почта">
     <input type="password" id="password" class="form-control-lg mt-1" placeholder="Пароль"><br>
     <span class="btn btn-primary btn-lg" onclick="login()">Войти</span>
-    <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.recovery') }}">Забыли пароль?</a>
+    <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.index') }}">Забыли пароль?</a>
     <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.register') }}">Нет аккаунта?</a>
 {% endblock %}
 

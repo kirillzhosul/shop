@@ -6,9 +6,14 @@
 
 import datetime
 from typing import Optional
-from ... import db
+
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import (
+    generate_password_hash, check_password_hash
+)
+
+from ...models.item.item import Item
+from ... import db
 
 
 class User(db.Model, UserMixin):
@@ -64,6 +69,15 @@ class User(db.Model, UserMixin):
         else:
             self.balance_real -= price
             return
+
+    def get_cart(self):
+        cart_count = sum([cart_item.quantity for cart_item in self.cart_items])
+        cart_price = sum([
+            Item.query.filter_by(id=cart_item.item_id).first().get_price_with_discount()[0]
+            for cart_item in self.cart_items
+        ])
+
+        return cart_price, cart_count
 
     def get_counters(self):
         counter_orders = len(self.orders)

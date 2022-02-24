@@ -1,8 +1,9 @@
 #!usr/bin/python
 """
-    Merchandise shop handled error names.
+    Merchandise shop application handled error names.
 """
 
+# All names of errors for user.
 NAMES = {
     200: "OK",
 
@@ -18,6 +19,8 @@ NAMES = {
     502: "Bad Gateway",
 }
 
+# This is registered codes,
+# all codes in that list will be register with handler.
 CODES = [
     401, 403, 404, 500, 418
 ]

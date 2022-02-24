@@ -4,4 +4,5 @@
     Provides access to some factored services.
 """
 
+from . import auth
 from . import templates
