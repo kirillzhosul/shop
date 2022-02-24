@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg" href="/legal/privacy">Политика конфиденциальности</a>
-    <a class="btn btn-outline-primary btn-lg" href="/legal/agreement">Пользовательское соглашение</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('legal.privacy') }}">Политика конфиденциальности</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('legal.agreement') }}">Пользовательское соглашение</a>
 {% endblock %}
 

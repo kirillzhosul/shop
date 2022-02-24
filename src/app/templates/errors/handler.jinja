@@ -51,7 +51,7 @@
 {% endblock %}
 
 {% block buttons %}
-    <a class="btn btn-outline-primary btn-lg" href="/">Вернуться на главную</a>
-    <a class="btn btn-outline-primary btn-lg" href="/faq">Помощь</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('root.index') }}">Вернуться на главную</a>
+    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('faq.index') }}">Помощь</a>
 {% endblock %}
 
