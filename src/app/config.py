@@ -25,9 +25,9 @@ class Config:
 
     # Database.
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_FILENAME = "database\\database.db"
+    SQLALCHEMY_DATABASE_FILENAME = ["database", "database.db"]
     SQLALCHEMY_DATABASE_FILEPATH = os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                                                SQLALCHEMY_DATABASE_FILENAME)
+                                                *SQLALCHEMY_DATABASE_FILENAME)
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{SQLALCHEMY_DATABASE_FILEPATH}"
 
 
