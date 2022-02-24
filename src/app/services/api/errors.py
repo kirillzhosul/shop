@@ -114,8 +114,6 @@ def api_get_error(error_type: ApiErrorType, *,
             message=message if message else "Платёж успешно завершён!",
             detail=detail if detail else "Тестовый режим оплаты!")
 
-
-
     return ApiError(
         status_code=500, code=0, type="InternalServerError",
         message="Неизвестная ошибка!",

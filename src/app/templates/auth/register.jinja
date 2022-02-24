@@ -16,11 +16,11 @@
             var phone = document.getElementById("phone").value;
             var email = document.getElementById("email").value;
 
-            if (email.length == 0) return document.getElementById("api-error-message").innerText = "Введите почту!";
-            if (password.length == 0) return document.getElementById("api-error-message").innerText = "Введите пароль!";
-            if (password_confirmation.length == 0) return document.getElementById("api-error-message").innerText = "Введите подтверждение пароля!";
-            if (name.length == 0) return document.getElementById("api-error-message").innerText = "Введите имя!";
-            if (phone.length == 0) return document.getElementById("api-error-message").innerText = "Введите телефон!";
+            if (email.length == 0) return document.getElementById("api-error").innerText = "Введите почту!";
+            if (password.length == 0) return document.getElementById("api-error").innerText = "Введите пароль!";
+            if (password_confirmation.length == 0) return document.getElementById("api-error").innerText = "Введите подтверждение пароля!";
+            if (name.length == 0) return document.getElementById("api-error").innerText = "Введите имя!";
+            if (phone.length == 0) return document.getElementById("api-error").innerText = "Введите телефон!";
 
             authRegister(name, phone, email, password, password_confirmation);
         }
@@ -38,7 +38,7 @@
 {% endblock %}
 
 {% block description %}
-    <div class="text-danger" id="api-error-message"></div>
+    <div class="text-danger" id="api-error"></div>
     <input type="text" id="name" class="form-control-lg" placeholder="ФИО"><br>
     <input type="email" id="email" class="form-control-lg" placeholder="Почта">
     <input type="text" id="phone" class="form-control-lg" placeholder="Телефон"><br>

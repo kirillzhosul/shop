@@ -1,9 +1,12 @@
 Disallow: /catalog/?query=
+
 Disallow: /cart/
 Disallow: /orders/
 Disallow: /favorites/
-Disallow: /api/
 Disallow: /profile/
+
+Disallow: /api/
+
 Disallow: /auth/login/
 Disallow: /auth/register/
 Disallow: /auth/
