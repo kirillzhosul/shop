@@ -67,7 +67,7 @@ def create(name: str = None, cfg: Type[Config] = ConfigProduction) -> Flask:
     app.url_map.strict_slashes = False
 
     # Database.
-    from . import models # Flask SQLAlchemy database models.
+    from . import models  # Flask SQLAlchemy database models.
     db.init_app(app)
     if not path_exists(app.config.get("SQLALCHEMY_DATABASE_FILEPATH")):
         db.create_all(app=app)
