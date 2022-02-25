@@ -52,6 +52,10 @@ class User(db.Model, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password, password)
 
+    @staticmethod
+    def exists(email: str):
+        return User.query.filter_by(email=email).first() is not None
+
     def get_balance(self):
         return self.balance_real + self.balance_bonus
 
@@ -69,6 +73,10 @@ class User(db.Model, UserMixin):
         else:
             self.balance_real -= price
             return
+
+    def topup(self):
+        self.balance_bonus += 500
+        self.balance_real += 1250
 
     def get_cart(self):
         cart_count = sum([cart_item.quantity for cart_item in self.cart_items])

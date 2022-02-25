@@ -4,14 +4,15 @@
 """
 
 from typing import NoReturn
+
 from flask import Flask
+
+from .cart_api import bp_api_cart
 
 
 def register(app: Flask) -> NoReturn:
     """
     Registers all views blueprints.
     :param: app Flask application.
-    :return:
     """
-    from .cart_api import bp_api_cart
     app.register_blueprint(bp_api_cart)

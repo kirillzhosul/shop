@@ -28,9 +28,8 @@ def register(app: Flask) -> NoReturn:
     app.register_blueprint(root.bp_root)
 
     # Passing to next register functions.
-    view_modules = (
+    [module.register(app) for module in (
+        # Modules to register.
         shop, auth, profile, api,
         faq, static, legal, developer
-    )
-    for module in view_modules:
-        module.register(app)
+    )]

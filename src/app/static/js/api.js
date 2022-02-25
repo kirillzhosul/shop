@@ -1,22 +1,33 @@
-function handleError(data, status){
+/// @description API Library for http://shop.kirillzhosul.site/
+/// @author Kirill Zhosul.
+/// @license (c) 2022 Kirill Zhosul.
+
+API_BASE_URL = "/api/";
+API_ERROR_CONTAINER = "error";
+API_ERROR_ELEMENT_ID = "api-error"
+
+function handleApiErrorResponse(data, status){
+    /// @description Wrapper for error API responses.
     if (data === undefined) return;
-    if (!("error" in data)) return;
+    if (!(API_ERROR_CONTAINER in data)) return;
 
-    if ("redirect_to" in data){
-        window.location = data["redirect_to"];
-    }
+    var error = data[API_ERROR_CONTAINER];
+    var code = error["code"];
+    var type = error["type"];
+    var message = error["message"];
+    var detail = error["detail"];
 
-    document.getElementById("api-error-message").innerText = data["error"];
+    var error_element = document.getElementById(API_ERROR_ELEMENT_ID);
+
+    error_element.innerHTML = "[" + code + "] " + type + "<br>" + message + "<br>" + detail;
 }
 
-function requestApi(method, params, handler, evenOnError=false){
-    $.get("/api/" + method + "?" + params, function(data, status){
-        if ("error" in data){
-            handleError(data, status);
-            if (!evenOnError) return;
-        }
+function requestApi(method, params, handler){
+    /// @description Wrapper for the API requests.
+    $.get(API_BASE_URL + method + "?" + params, function(data, status){
+        if (API_ERROR_CONTAINER in data) handleApiErrorResponse(data, status);
         return handler(data, status)
     }).fail(function(xhr, status, error){
-        return handleError(xhr.responseJSON, status);
+        return handleApiErrorResponse(xhr.responseJSON, status);
     });
 }

@@ -3,43 +3,37 @@
     Merchandise shop application balance API views.
 """
 
-from flask import Blueprint, jsonify, url_for
+from flask import Blueprint, Response
 from flask_login import current_user
 
-from .... import db
-
+from ....services.api.errors import ApiErrorType
+from ....services.api.wrappers import api_auth_required
+from ....services.api.response import ApiResponse
 
 bp_api_balance = Blueprint("api_balance", __name__)
 
 
 @bp_api_balance.route("/api/balance/get", methods=["GET"])
-def get():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.login"),
-            "auth_required": True
-        }), 401
-    return jsonify({
-        "real": current_user.balance_bonus,
-        "bonus": current_user.balance_real
-    }), 200
+@api_auth_required
+def get() -> Response:
+    """
+    Balance API get method.
+    Returns current user balance.
+    """
+    return ApiResponse.success({
+        "balance": {
+            "real": current_user.balance_bonus,
+            "bonus": current_user.balance_real
+        }
+    })
 
 
 @bp_api_balance.route("/api/balance/topup", methods=["GET"])
+@api_auth_required
 def topup():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Авторизуйтесь для выполнения запроса!",
-            "redirect_to": url_for("auth.login"),
-            "auth_required": True
-        }), 401
-
-    current_user.balance_bonus += 500
-    current_user.balance_real += 1250
-    db.session.commit()
-
-    return jsonify({
-        "payment_service_url": "",
-        "error": "Баланс пополнен на 1250Р и 500БР. Тестовый режим оплаты"
-    }), 200
+    """
+    Balance API topup method.
+    Will top up user balance and return payment error as payment currently in test mode.
+    """
+    current_user.topup()
+    return ApiResponse.error(ApiErrorType.PAYMENT_ERROR)

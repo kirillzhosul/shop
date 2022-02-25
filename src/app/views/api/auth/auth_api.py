@@ -2,12 +2,16 @@
 """
     Merchandise shop application auth API views.
 """
+# TODO: Phone, mail, name validators.
 
-from flask import Blueprint, request, jsonify, url_for
-from flask_login import current_user, login_user, logout_user
+from flask import Blueprint, request
+from flask_login import logout_user, current_user
 
+from ....services.api.wrappers import api_auth_dissallowed, api_auth_required
+from ....services.api.response import ApiResponse
+from ....services.api.errors import ApiErrorType
+from ....services.auth import try_login_user
 from ....models.user.user import User
-
 from .... import db
 
 
@@ -15,55 +19,34 @@ bp_api_auth = Blueprint("api_auth", __name__)
 
 
 @bp_api_auth.route("/api/auth/login", methods=["GET"])
+@api_auth_dissallowed
 def login():
-    if current_user.is_authenticated:
-        return jsonify({
-            "error": "Вы уже авторизованы, вам не требется авторизация!",
-            "redirect_to": url_for("profile.index"),
-            "auth_required": False
-        }), 400
-
-    # This method of handling auth is NOT very safe, but yes.
+    """API Login method, login you to the account using given credentials. """
     email = request.args.get("email", type=str, default="")
     password = request.args.get("password", type=str, default="")
+    remember = request.args.get("remember", type=bool, default=True)
 
-    if len(email) == 0 or len(password) == 0:
-        return jsonify({
-            "error": "Заполните все поля!"
-        }), 400
+    if not email:
+        return ApiResponse.error(ApiErrorType.FIELD_REQUIRED, field="email")
 
-    if not (user := User.query.filter_by(email=email).first()):
-        return jsonify({
-            "error": "Данные для входа не верны!"
-        }), 400
+    if not password:
+        return ApiResponse.error(ApiErrorType.FIELD_REQUIRED, field="password")
 
-    if not user.verify_password(password):
-        return jsonify({
-            "error": "Данные для входа не верны!"
-        }), 400
+    if not try_login_user(email, password, remember):
+        return ApiResponse.error(ApiErrorType.AUTH_FAILED)
 
-    login_user(user, remember=True,
-               force=False, fresh=True)
-
-    return jsonify({
+    return ApiResponse.success({
         "user": {
-            "id": user.id,
-            "email": user.email
+            "id": current_user.id,
+            "email": current_user.email
         },
-        "redirect_to": url_for("profile.index")
-    }), 200
+    })
 
 
 @bp_api_auth.route("/api/auth/register", methods=["GET"])
+@api_auth_dissallowed
 def register():
-    if current_user.is_authenticated:
-        return jsonify({
-            "error": "Вы уже авторизованы, вам не требется авторизация!",
-            "redirect_to": url_for("profile.index"),
-            "auth_required": False
-        }), 400
-
-    # This method of handling auth is NOT very safe, but yes.
+    """API register method. Register a new account and login in to it. """
     name = request.args.get("name", type=str, default="")
     phone = request.args.get("phone", type=str, default="")
     email = request.args.get("email", type=str, default="")
@@ -71,57 +54,48 @@ def register():
     password = request.args.get("password", type=str, default="")
     password_confirmation = request.args.get("password_confirmation", type=str, default="")
 
-    reject_auto_login = request.args.get("reject_auto_login", type=bool, default=False)
-
-    # TODO. REVIEW.
-    if len(name) == 0 or len(phone) == 0 or len(email) == 0:
-        return jsonify({"error": "Заполните поля "
-                                 "`name`, `phone`, `email`, `password`, `password_confirmation` в запросе!"}), 400
-    if len(name) <= 5 or len(phone) <= 5 or len(email) <= 5:
-        return jsonify({"error": "Одно из полей запроса `name`, `phone`, `email` слишком короткое"}), 400
-    if len(name) >= 254 or len(phone) >= 254 or len(email) >= 254:
-        return jsonify({"error": "Одно из полей запроса `name`, `phone`, `email` слишком длинное"}), 400
+    if len(name) <= 5:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_SHORT, field="name")
+    if len(phone) <= 5:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_SHORT, field="phone")
+    if len(email) <= 5:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_SHORT, field="email")
     if len(password) <= 5:
-        return jsonify({"error": "Пароль слишком короткий!"}), 400
-    if password != password_confirmation:
-        return jsonify({"error": "Пароль и подтверждение пароля не совпадает!"}), 400
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_SHORT, field="password")
 
-    if User.query.filter_by(email=email).first():
-        return jsonify({
-            "error": "Пользователь с данной электронной почтой уже зарегистрирован!"
-        }), 400
+    if len(name) >= 254:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_LONG, field="name")
+    if len(phone) >= 254:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_LONG, field="phone")
+    if len(email) >= 254:
+        return ApiResponse.error(ApiErrorType.FIELD_TOO_LONG, field="email")
+
+    if password != password_confirmation:
+        return ApiResponse.error(ApiErrorType.AUTH_PASSWORD_CONFIRMATION_MISMATCH)
+
+    if User.exists(email):
+        return ApiResponse.error(ApiErrorType.AUTH_ALREADY_EXISTS)
 
     user = User(email, name, password, phone if phone else None)
     db.session.add(user)
     db.session.commit()
 
-    if not reject_auto_login:
-        login_user(user, remember=True,
-                   force=False, fresh=False)
+    if not try_login_user(email, password, True):
+        return ApiResponse.error(ApiErrorType.AUTH_FAILED)
 
-    return jsonify({
+    return ApiResponse.success({
         "user": {
             "id": user.id,
             "email": user.email,
             "name":  user.name,
             "phone":  user.phone
         },
-        "already_login": not reject_auto_login,
-        "redirect_to": url_for("auth.login" if reject_auto_login else "profile.index")
-    }), 200
+    })
 
 
 @bp_api_auth.route("/api/auth/logout", methods=["GET"])
+@api_auth_required
 def logout():
-    if not current_user.is_authenticated:
-        return jsonify({
-            "error": "Вам не требуется выход!",
-            "redirect_to": url_for("auth.index"),
-            "auth_required": True
-        }), 401
-
+    """API logout method, logs user ot of the profile. """
     logout_user()
-
-    return jsonify({
-        "redirect_to": url_for("auth.index")
-    }), 200
+    return ApiResponse.success({})

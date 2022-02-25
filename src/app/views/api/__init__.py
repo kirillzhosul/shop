@@ -2,12 +2,17 @@
 """
     Merchandise shop API views.
 """
-
-from typing import NoReturn
-from flask import Flask
-
 # TODO: Catalog API.
 # TODO: Categories API.
+# TODO: Item API.
+
+from typing import NoReturn
+
+from flask import Flask
+
+from . import (
+    cart, favorites, auth, balance, order  # Account API.
+)
 
 
 def register(app: Flask) -> NoReturn:
@@ -16,13 +21,9 @@ def register(app: Flask) -> NoReturn:
     :param: app Flask application.
     :return:
     """
-    from . import cart
-    from . import favorites
-    from . import auth
-    from . import balance
-    from . import order
-    auth.register(app)
-    cart.register(app)
-    favorites.register(app)
-    balance.register(app)
-    order.register(app)
+    # Passing to next register functions.
+    [module.register(app) for module in (
+        # Modules to register.
+        cart, favorites, auth,
+        balance, order
+    )]

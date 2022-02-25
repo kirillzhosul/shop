@@ -12,8 +12,8 @@
             var password = document.getElementById("password").value;
             var email = document.getElementById("email").value;
 
-            if (email.length == 0) return document.getElementById("api-error-message").innerText = "Введите почту!";
-            if (password.length == 0) return document.getElementById("api-error-message").innerText = "Введите пароль!";
+            if (email.length == 0) return document.getElementById("api-error").innerText = "Введите почту!";
+            if (password.length == 0) return document.getElementById("api-error").innerText = "Введите пароль!";
 
             authLogin(email, password);
         }
@@ -31,7 +31,7 @@
 {% endblock %}
 
 {% block description %}
-    <div class="text-danger" id="api-error-message"></div>
+    <div class="text-danger" id="api-error"></div>
 
     <input type="email" id="email" class="form-control-lg" placeholder="Почта">
     <input type="password" id="password" class="form-control-lg mt-1" placeholder="Пароль"><br>
