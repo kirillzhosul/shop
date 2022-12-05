@@ -18,4 +18,4 @@ RUN pip install --upgrade --no-cache-dir -r requirements.txt
 COPY ./src/ /srv/www/kirillzhosul/shop/
 
 # Run project.
-CMD ["python run.py"]
+CMD ["run.py"]
