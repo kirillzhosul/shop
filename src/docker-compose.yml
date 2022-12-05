@@ -7,7 +7,7 @@ services:
     env_file:
       - .server.env
     volumes:
-      - ./api:/srv/www/kirillzhosul/shop
+      - ./:/srv/www/kirillzhosul/shop
     ports:
       - "${COMPOSE_EXPOSED_PORT}:80"
     build: .

@@ -15,7 +15,7 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade --no-cache-dir -r requirements.txt
 
 # Copy whole project.
-COPY ./src/ /srv/www/kirillzhosul/shop/
+COPY . /srv/www/kirillzhosul/shop
 
 # Run project.
-CMD ["run.py"]
+CMD ["python", "run.py"]
